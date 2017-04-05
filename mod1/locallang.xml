@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<generator>LFEditor</generator>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="availiable_feeds">Available feeds</label>
+			<label index="back_label">Go back</label>
+			<label index="checkts">Check typoscript_config for feed</label>
+			<label index="editrecord">Edit Record</label>
+			<label index="feeds.edit">Edit</label>
+			<label index="feeds.errors">Errors</label>
+			<label index="feeds.errors_count">Number of errors</label>
+			<label index="feeds.status">Status</label>
+			<label index="feeds.title">Title</label>
+			<label index="feeds.update">Update</label>
+			<label index="feeds.url">Feed URL</label>
+			<label index="function1">Update feeds</label>
+			<label index="function2">Function #2</label>
+			<label index="function3">Function #3</label>
+			<label index="missingfields">The following fields are missing in tt_news:</label>
+			<label index="newrecord">Create New Feed Record</label>
+			<label index="news.title">Title</label>
+			<label index="select_all_label">Select all</label>
+			<label index="submit_label">Update selected feeds</label>
+			<label index="title">RSS2 Import</label>
+		</languageKey>
+		<languageKey index="dk" type="array">
+			<label index="availiable_feeds">Tilgængelige feeds</label>
+			<label index="back_label">Tilbage</label>
+			<label index="checkts">Check typoscript_config for feedet</label>
+			<label index="editrecord">Redigér element</label>
+			<label index="feeds.edit">Redigér</label>
+			<label index="feeds.errors">Fejl</label>
+			<label index="feeds.errors_count">Antal fejl</label>
+			<label index="feeds.status">Status</label>
+			<label index="feeds.title">Titel</label>
+			<label index="feeds.update">Opdatér</label>
+			<label index="feeds.url">Feed URL</label>
+			<label index="function1">Opdatér feeds</label>
+			<label index="missingfields">Følgende felter mangler i tt_news:</label>
+			<label index="newrecord">Opret nyt feed-element</label>
+			<label index="news.title">Titel</label>
+			<label index="select_all_label">Vælg alle</label>
+			<label index="submit_label">Opdatér valgte feeds</label>
+			<label index="title">RSS2 Importering</label>
+		</languageKey>
+		<languageKey index="de"></languageKey>
+		<languageKey index="no"></languageKey>
+		<languageKey index="it"></languageKey>
+		<languageKey index="fr"></languageKey>
+		<languageKey index="es"></languageKey>
+		<languageKey index="nl"></languageKey>
+		<languageKey index="cz"></languageKey>
+		<languageKey index="pl"></languageKey>
+		<languageKey index="si"></languageKey>
+		<languageKey index="fi"></languageKey>
+		<languageKey index="tr"></languageKey>
+		<languageKey index="se"></languageKey>
+		<languageKey index="pt"></languageKey>
+		<languageKey index="ru"></languageKey>
+		<languageKey index="ro"></languageKey>
+		<languageKey index="ch"></languageKey>
+		<languageKey index="sk"></languageKey>
+		<languageKey index="lt"></languageKey>
+		<languageKey index="is"></languageKey>
+		<languageKey index="hr"></languageKey>
+		<languageKey index="hu"></languageKey>
+		<languageKey index="gl"></languageKey>
+		<languageKey index="th"></languageKey>
+		<languageKey index="gr"></languageKey>
+		<languageKey index="hk"></languageKey>
+		<languageKey index="eu"></languageKey>
+		<languageKey index="bg"></languageKey>
+		<languageKey index="br"></languageKey>
+		<languageKey index="et"></languageKey>
+		<languageKey index="ar"></languageKey>
+		<languageKey index="he"></languageKey>
+		<languageKey index="ua"></languageKey>
+		<languageKey index="lv"></languageKey>
+		<languageKey index="jp"></languageKey>
+		<languageKey index="vn"></languageKey>
+		<languageKey index="ca"></languageKey>
+		<languageKey index="ba"></languageKey>
+		<languageKey index="kr"></languageKey>
+		<languageKey index="eo"></languageKey>
+		<languageKey index="my"></languageKey>
+		<languageKey index="hi"></languageKey>
+		<languageKey index="fo"></languageKey>
+		<languageKey index="fa"></languageKey>
+		<languageKey index="sr"></languageKey>
+		<languageKey index="sq"></languageKey>
+		<languageKey index="ge"></languageKey>
+		<languageKey index="ga"></languageKey>
+	</data>
+</T3locallang>

@@ -1,0 +1,16 @@
+@CHARSET "UTF-8";
+
+.tx-rss2-import-status-imported {
+ 	border: 1px solid red;
+ 	background-color: #FAA;
+}
+
+.tx-rss2-import-status-updated {
+ 	border: 1px solid green;
+ 	background-color: #AFA;
+}
+
+.tx-rss2-import-status-not-overridden {
+ 	border: 1px solid blue;
+ 	background-color: #AAF;
+}

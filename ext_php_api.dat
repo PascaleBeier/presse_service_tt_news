@@ -1,0 +1,921 @@
+a:2:{s:4:"meta";a:3:{s:5:"title";s:11:"RSS2 Import";s:5:"descr";s:200:"Will import RSS2 feeds, including RSS2 feeds with namespaced event-information. It stores in tt_news records. If the tt_news records have been extended with new fields, then you can store in them too.";s:7:"options";a:2:{s:10:"usageCount";s:1:"1";s:19:"includeCodeAbstract";s:1:"1";}}s:5:"files";a:19:{s:14:"MD5_90958d130c";a:5:{s:8:"filename";s:20:"class.ext_update.php";s:8:"filesize";i:3071;s:6:"header";a:5:{s:4:"text";s:213:"
+
+This file adds an 'UPDATE' entry in the Extension Manager for the rss2_import
+extension. The button is visible if the access() method below returns true.
+
+ext_update class used to schedule events to gabriel ext
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}s:5:"other";a:2:{i:0;s:41:"@author	Kasper Ligaard <kasperl@cs.au.dk>";i:1;s:28:"@version	0.1 - 1. Oct., 2009";}s:11:"other_index";a:2:{s:7:"@author";a:1:{i:0;s:33:"Kasper Ligaard <kasperl@cs.au.dk>";}s:8:"@version";a:1:{i:0;s:19:"0.1 - 1. Oct., 2009";}}}s:3:"DAT";a:3:{i:1;a:8:{s:6:"header";s:19:"class ext_update  {";s:5:"class";i:1;s:11:"parentClass";s:10:"ext_update";s:4:"cDat";a:5:{s:4:"text";s:214:"
+
+This file adds an 'UPDATE' entry in the Extension Manager for the rss2_import
+extension. The button is visible if the access() method below returns true.
+
+ext_update class used to schedule events to gabriel ext
+
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}s:5:"other";a:2:{i:0;s:41:"@author	Kasper Ligaard <kasperl@cs.au.dk>";i:1;s:28:"@version	0.1 - 1. Oct., 2009";}s:11:"other_index";a:2:{s:7:"@author";a:1:{i:0;s:33:"Kasper Ligaard <kasperl@cs.au.dk>";}s:8:"@version";a:1:{i:0;s:19:"0.1 - 1. Oct., 2009";}}}s:7:"content";a:2:{i:0;s:3:"
+ 	";i:1;i:-1;}s:12:"content_size";i:3;s:13:"content_lines";i:1;s:6:"atLine";i:32;}i:3;a:4:{s:6:"header";s:24:"public function main()	{";s:11:"parentClass";s:10:"ext_update";s:4:"cDat";a:6:{s:4:"text";s:170:"
+
+Called by Typo3 when a user clicks the 'UPDATE' entry in the drop-down box
+for this extension in the Extension Manager. Schedules this extensinInstalls gabriel events
+
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:12:"HTML message";}s:6:"access";s:6:"public";s:5:"other";a:2:{i:0;s:22:"@author	Kasper Ligaard";i:1;s:28:"@version 0.1 - 1. Oct., 2009";}s:11:"other_index";a:2:{s:7:"@author";a:1:{i:0;s:14:"Kasper Ligaard";}s:8:"@version";a:1:{i:0;s:19:"0.1 - 1. Oct., 2009";}}}s:6:"atLine";i:43;}i:5;a:7:{s:6:"header";s:26:"public function access()	{";s:11:"parentClass";s:10:"ext_update";s:4:"cDat";a:6:{s:4:"text";s:100:"
+
+Checks if any gabriel entries do already exists and returns false then to prevent double inserts
+
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:7:"boolean";i:1;s:48:"false if any record exists in 'tx_gabriel' table";}s:6:"access";s:6:"public";s:5:"other";a:2:{i:0;s:22:"@author	Kasper Ligaard";i:1;s:28:"@version 0.1 - 1. Oct., 2009";}s:11:"other_index";a:2:{s:7:"@author";a:1:{i:0;s:14:"Kasper Ligaard";}s:8:"@version";a:1:{i:0;s:19:"0.1 - 1. Oct., 2009";}}}s:7:"content";a:2:{i:0;s:347:"		$gabrielQuery = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+			'count(*) as count',
+			'tx_gabriel',
+			'crid="tx_rss2import"'
+		);
+		$gabrielRecord = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($gabrielQuery);
+
+		$returnValue = true;
+		if ($gabrielRecord['count'] > 0) {
+			$returnValue = false;
+		}
+
+		return $returnValue;
+    } //end of access()
+
+}
+
+?>";i:1;i:0;}s:12:"content_size";i:347;s:13:"content_lines";i:17;s:6:"atLine";i:68;}}s:10:"usageCount";a:3:{s:12:"H_8980e1b1bb";a:2:{s:24:"_searchtime_milliseconds";d:19;s:15:"_functionHeader";s:19:"class ext_update  {";}s:12:"H_9439a0424c";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_19aaeae789";a:3:{s:8:"fileName";s:14:"mod1/index.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:4;s:15:"_functionHeader";s:24:"public function main()	{";}s:12:"H_a03d002725";a:2:{s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:26:"public function access()	{";}}}s:14:"MD5_343e15ccdf";a:5:{s:8:"filename";s:33:"class.tx_rss2import_rssparser.php";s:8:"filesize";i:11568;s:6:"header";N;s:3:"DAT";a:12:{i:1;a:8:{s:6:"header";s:30:"class tx_rss2import_RSSParser{";s:5:"class";i:1;s:11:"parentClass";s:23:"tx_rss2import_RSSParser";s:4:"cDat";a:3:{s:4:"text";s:1434:"
+***************************************************************************************************************
+Date: October 21, 2004
+Author: Dan Cochran
+
+Description: This will gather all basic information contained in a rss2.0 feed. Along with basic functionality,
+            the RSSParser will also parse feeds extended by namespaces (by Mads Kirkedal Henriksen).
+            Please see the example at the bottom to see how to use the class, and most importantly, have fun!
+
+email me with question or comments/bugs @ dan@deecodameeko.com (Or mkh@daimi.au.dk for the modified version)
+
+Disclaimer:
+Copyright (C) 2005  Dan Cochran
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*****************************************************************************************************************/
+
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";a:2:{i:0;s:845:"	private $parseResult = array();
+
+	private $insideitem = false;
+	private $insideimage = false;
+	private $insidetext = false;
+	private $insideNS = array();
+	private $url = '';
+	private $enclosure = '';
+
+	//channel vars
+	private $cTitle, $cLink, $cDesc, $cLanguage, $cCopyright, $cManageEditor, $cWebmaster, $cLastBuild, $cRating, $cDocs, $cCategory,  $cGenerator, $cPubDate;
+
+	//image vars
+	private $imTitle, $imUrl, $imLink, $imWidth, $imHeight;
+
+	//item vars
+	private $iTitle, $iLink, $iDesc, $iAuthor, $iComments, $iEnclosure, $iGuid, $iPubDate, $iSource, $iCloud;
+	private $iCategory = array();
+	private $iExtrasNS = array(); //The extra tags extended by namespaces
+
+	//textinput elements
+	private $tTitle, $tLink, $tDesc, $tName;
+
+	private $result;
+
+	private $errors = array();
+
+	private $namespaces = array();
+
+	private $xml_parser = null;
+";i:1;i:-1;}s:12:"content_size";i:845;s:13:"content_lines";i:30;s:6:"atLine";i:31;}i:3;a:6:{s:6:"header";s:31:"public function __construct() {";s:11:"parentClass";s:23:"tx_rss2import_RSSParser";s:7:"content";a:2:{i:0;s:270:"		$this->parseResult = array();
+		$this->xml_parser = xml_parser_create();
+		xml_set_object($this->xml_parser, $this);
+		xml_set_element_handler($this->xml_parser, "startElement", "endElement");
+		xml_set_character_data_handler($this->xml_parser, "characterData");
+	}
+
+	";i:1;i:0;}s:12:"content_size";i:270;s:13:"content_lines";i:7;s:6:"atLine";i:63;}i:5;a:6:{s:6:"header";s:29:"public function parse($url) {";s:11:"parentClass";s:23:"tx_rss2import_RSSParser";s:7:"content";a:2:{i:0;s:266:"		$xml = t3lib_div::getURL($url);
+		$status = xml_parse($this->xml_parser, $xml);
+		if (!$status) {
+			$this->errors[] = 'XML error: ' . xml_error_string(xml_get_error_code($this->xml_parser)) . ' at line ' . xml_get_current_line_number($this->xml_parser);
+		}
+	}
+
+	";i:1;i:0;}s:12:"content_size";i:266;s:13:"content_lines";i:7;s:6:"atLine";i:77;}i:7;a:6:{s:6:"header";s:30:"public function get_errors() {";s:11:"parentClass";s:23:"tx_rss2import_RSSParser";s:7:"content";a:2:{i:0;s:29:"		return $this->errors;
+	}
+
+	";i:1;i:0;}s:12:"content_size";i:29;s:13:"content_lines";i:3;s:6:"atLine";i:90;}i:9;a:6:{s:6:"header";s:30:"public function get_channel(){";s:11:"parentClass";s:23:"tx_rss2import_RSSParser";s:7:"content";a:2:{i:0;s:95:"		if(isset($this->parseResult['channel'])){
+			return($this->parseResult['channel']);
+		}
+	}
+
+	";i:1;i:0;}s:12:"content_size";i:95;s:13:"content_lines";i:5;s:6:"atLine";i:99;}i:11;a:6:{s:6:"header";s:28:"public function get_items(){";s:11:"parentClass";s:23:"tx_rss2import_RSSParser";s:7:"content";a:2:{i:0;s:91:"		if(isset($this->parseResult['items'])){
+			return($this->parseResult['items']);
+		}
+	}
+
+	";i:1;i:0;}s:12:"content_size";i:91;s:13:"content_lines";i:5;s:6:"atLine";i:110;}i:13;a:6:{s:6:"header";s:28:"public function get_image(){";s:11:"parentClass";s:23:"tx_rss2import_RSSParser";s:7:"content";a:2:{i:0;s:91:"		if(isset($this->parseResult['image'])){
+			return($this->parseResult['image']);
+		}
+	}
+
+	";i:1;i:0;}s:12:"content_size";i:91;s:13:"content_lines";i:5;s:6:"atLine";i:121;}i:15;a:6:{s:6:"header";s:29:"public function get_rating(){";s:11:"parentClass";s:23:"tx_rss2import_RSSParser";s:7:"content";a:2:{i:0;s:93:"		if(isset($this->parseResult['rating'])){
+			return($this->parseResult['rating']);
+		}
+	}
+
+	";i:1;i:0;}s:12:"content_size";i:93;s:13:"content_lines";i:5;s:6:"atLine";i:132;}i:17;a:6:{s:6:"header";s:32:"public function get_textinput(){";s:11:"parentClass";s:23:"tx_rss2import_RSSParser";s:7:"content";a:2:{i:0;s:99:"		if(isset($this->parseResult['textinput'])){
+			return($this->parseResult['textinput']);
+		}
+	}
+
+	";i:1;i:0;}s:12:"content_size";i:99;s:13:"content_lines";i:5;s:6:"atLine";i:143;}i:19;a:6:{s:6:"header";s:58:"private function startElement($parser, $tagName, $attrs) {";s:11:"parentClass";s:23:"tx_rss2import_RSSParser";s:7:"content";a:2:{i:0;s:507:"
+		$this->tag = $tagName;
+
+		if ($tagName == "RSS") {
+			//NameSpace information gathering
+			if (isset($attrs['XMLNS'])) {
+				$this->namespaces['DEFAULT'] = $attrs['XMLNS'];
+			}
+			foreach ($attrs as $key => $value) {
+				if (substr($key,0,6) == 'XMLNS:') {
+					$namespace = explode(':', $key, 2);
+					$this->namespaces[$namespace[1]] = $value;
+				}
+			}
+		}
+
+		if($tag
+[...]
+NS[strtolower($tagNameNS[0])][strtolower($tagNameNS[1])] = $extraTag;
+			} else {
+				//invalid tag (ignoring)
+			}
+		}
+	}
+
+	";i:1;i:1;}s:12:"content_size";i:1053;s:13:"content_lines";i:42;s:6:"atLine";i:157;}i:21;a:3:{s:6:"header";s:48:"private function characterData($parser, $data) {";s:11:"parentClass";s:23:"tx_rss2import_RSSParser";s:6:"atLine";i:207;}i:23;a:6:{s:6:"header";s:48:"private function endElement($parser, $tagName) {";s:11:"parentClass";s:23:"tx_rss2import_RSSParser";s:7:"content";a:2:{i:0;s:507:"
+		if ($tagName == "ITEM") {
+
+			$this->result['item']["title"] = $this->iTitle;
+			$this->result['item']["description"] = $this->iDesc;
+			$this->result['item']["link"] = $this->iLink;
+			$this->result['item']["author"] = $this->iAuthor;
+			$this->result['item']['category'] = $this->iCategory;
+			$this->result['item']['comments'] = $this->iComments;
+			$this->result['item
+[...]
+'])) {
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rss2_import/mod1/class.tx_rss2import_rssparser.php']);
+}
+?>
+";i:1;i:1;}s:12:"content_size";i:4149;s:13:"content_lines";i:121;s:6:"atLine";i:336;}}s:10:"usageCount";a:12:{s:12:"H_80424739af";a:2:{s:24:"_searchtime_milliseconds";d:22;s:15:"_functionHeader";s:30:"class tx_rss2import_RSSParser{";}s:12:"H_15f7354a47";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_f613eb277b";a:3:{s:8:"fileName";s:41:"mod1/class.tx_rss2import_notification.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:31:"public function __construct() {";}s:12:"H_8bcb8d2414";a:5:{s:3:"ALL";a:2:{s:11:"objectUsage";i:3;s:5:"TOTAL";i:3;}s:14:"MD5_343e15ccdf";a:3:{s:8:"fileName";s:33:"class.tx_rss2import_rssparser.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_efa2fdecb2";a:3:{s:8:"fileName";s:35:"mod1/class.tx_rss2import_helper.php";s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:24:"_searchtime_milliseconds";d:5;s:15:"_functionHeader";s:29:"public function parse($url) {";}s:12:"H_06c017c4b1";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_efa2fdecb2";a:3:{s:8:"fileName";s:35:"mod1/class.tx_rss2import_helper.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:30:"public function get_errors() {";}s:12:"H_86a6508531";a:5:{s:3:"ALL";a:2:{s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_343e15ccdf";a:3:{s:8:"fileName";s:33:"class.tx_rss2import_rssparser.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_efa2fdecb2";a:3:{s:8:"fileName";s:35:"mod1/class.tx_rss2import_helper.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:3;s:15:"_functionHeader";s:30:"public function get_channel(){";}s:12:"H_d9e2287546";a:5:{s:3:"ALL";a:2:{s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_343e15ccdf";a:3:{s:8:"fileName";s:33:"class.tx_rss2import_rssparser.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_efa2fdecb2";a:3:{s:8:"fileName";s:35:"mod1/class.tx_rss2import_helper.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:4;s:15:"_functionHeader";s:28:"public function get_items(){";}s:12:"H_98c398e273";a:5:{s:3:"ALL";a:2:{s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_343e15ccdf";a:3:{s:8:"fileName";s:33:"class.tx_rss2import_rssparser.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_efa2fdecb2";a:3:{s:8:"fileName";s:35:"mod1/class.tx_rss2import_helper.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:4;s:15:"_functionHeader";s:28:"public function get_image(){";}s:12:"H_659e226765";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_343e15ccdf";a:3:{s:8:"fileName";s:33:"class.tx_rss2import_rssparser.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:3;s:15:"_functionHeader";s:29:"public function get_rating(){";}s:12:"H_f7b21b2e0d";a:5:{s:3:"ALL";a:2:{s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_343e15ccdf";a:3:{s:8:"fileName";s:33:"class.tx_rss2import_rssparser.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_efa2fdecb2";a:3:{s:8:"fileName";s:35:"mod1/class.tx_rss2import_helper.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:3;s:15:"_functionHeader";s:32:"public function get_textinput(){";}s:12:"H_2126be502b";a:2:{s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:58:"private function startElement($parser, $tagName, $attrs) {";}s:12:"H_23215f85e3";a:2:{s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:48:"private function characterData($parser, $data) {";}s:12:"H_739b4dd967";a:2:{s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:48:"private function endElement($parser, $tagName) {";}}}s:14:"MD5_7883d29326";a:5:{s:8:"filename";s:33:"class.tx_rss2import_scheduler.php";s:8:"filesize";i:2230;s:6:"header";a:5:{s:4:"text";s:49:"
+
+Class "tx_rss2import_scheduler" provides (..?)
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}s:5:"other";a:3:{i:0;s:37:"@author		Stefan Busemann (in2code.de)";i:1;s:15:"@package		TYPO3";i:2;s:23:"@subpackage	rss2_import";}s:11:"other_index";a:3:{s:7:"@author";a:1:{i:0;s:28:"Stefan Busemann (in2code.de)";}s:8:"@package";a:1:{i:0;s:6:"TYPO3 ";}s:11:"@subpackage";a:1:{i:0;s:12:"rss2_import ";}}}s:3:"DAT";a:3:{i:1;a:8:{s:6:"header";s:57:"class tx_rss2import_scheduler extends tx_scheduler_Task {";s:5:"class";i:1;s:11:"parentClass";s:23:"tx_rss2import_scheduler";s:4:"cDat";a:5:{s:4:"text";s:50:"
+
+Class "tx_rss2import_scheduler" provides (..?)
+
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}s:5:"other";a:3:{i:0;s:37:"@author		Stefan Busemann (in2code.de)";i:1;s:15:"@package		TYPO3";i:2;s:23:"@subpackage	rss2_import";}s:11:"other_index";a:3:{s:7:"@author";a:1:{i:0;s:28:"Stefan Busemann (in2code.de)";}s:8:"@package";a:1:{i:0;s:6:"TYPO3 ";}s:11:"@subpackage";a:1:{i:0;s:12:"rss2_import ";}}}s:7:"content";a:2:{i:0;s:87:"
+	/**
+	 * uid of the feed Record
+	 *
+	 * @var	integer		$feed
+	 */
+	public $feed = 0;
+
+	";i:1;i:-1;}s:12:"content_size";i:87;s:13:"content_lines";i:8;s:6:"atLine";i:31;}i:3;a:4:{s:6:"header";s:27:"public function execute() {";s:11:"parentClass";s:23:"tx_rss2import_scheduler";s:4:"cDat";a:3:{s:4:"text";s:40:"
+
+Function executed from the Scheduler.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:6:"atLine";i:45;}i:5;a:7:{s:6:"header";s:44:"public function getAdditionalInformation() {";s:11:"parentClass";s:23:"tx_rss2import_scheduler";s:4:"cDat";a:3:{s:4:"text";s:78:"
+
+This method returns additional information metadata about the feed setting.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:22:"Information to display";}}s:7:"content";a:2:{i:0;s:376:"		return $GLOBALS['LANG']->sL('LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_scheduler.record1') . ': ' . $this->feed;
+	}
+}
+
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rss2_import/class.tx_rss2import_scheduler.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/scheduler/rss2_import/class.tx_rss2import_scheduler.php']);
+}
+?>";i:1;i:0;}s:12:"content_size";i:376;s:13:"content_lines";i:7;s:6:"atLine";i:60;}}s:10:"usageCount";a:3:{s:12:"H_cb25af3848";a:2:{s:24:"_searchtime_milliseconds";d:107;s:15:"_functionHeader";s:57:"class tx_rss2import_scheduler extends tx_scheduler_Task {";}s:12:"H_4440423aa1";a:2:{s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:27:"public function execute() {";}s:12:"H_448465023e";a:2:{s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:44:"public function getAdditionalInformation() {";}}}s:14:"MD5_ad5057e8be";a:5:{s:8:"filename";s:57:"class.tx_rss2import_scheduler_additionalfieldprovider.php";s:8:"filesize";i:5696;s:6:"header";a:5:{s:4:"text";s:68:"
+
+Aditional fields provider class for usage with the EXT:rss2import
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}s:5:"other";a:3:{i:0;s:37:"@author		Stefan Busemann (in2code.de)";i:1;s:15:"@package		TYPO3";i:2;s:23:"@subpackage	rss2_import";}s:11:"other_index";a:3:{s:7:"@author";a:1:{i:0;s:28:"Stefan Busemann (in2code.de)";}s:8:"@package";a:1:{i:0;s:6:"TYPO3 ";}s:11:"@subpackage";a:1:{i:0;s:12:"rss2_import ";}}}s:3:"DAT";a:4:{i:1;a:8:{s:6:"header";s:103:"class tx_rss2import_scheduler_additionalfieldprovider implements tx_scheduler_AdditionalFieldProvider {";s:5:"class";i:1;s:11:"parentClass";s:47:"tx_rss2import_scheduler_additionalfieldprovider";s:4:"cDat";a:5:{s:4:"text";s:69:"
+
+Aditional fields provider class for usage with the EXT:rss2import
+
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}s:5:"other";a:3:{i:0;s:37:"@author		Stefan Busemann (in2code.de)";i:1;s:15:"@package		TYPO3";i:2;s:23:"@subpackage	rss2_import";}s:11:"other_index";a:3:{s:7:"@author";a:1:{i:0;s:28:"Stefan Busemann (in2code.de)";}s:8:"@package";a:1:{i:0;s:6:"TYPO3 ";}s:11:"@subpackage";a:1:{i:0;s:12:"rss2_import ";}}}s:7:"content";a:2:{i:0;s:2:"
+	";i:1;i:-1;}s:12:"content_size";i:2;s:13:"content_lines";i:1;s:6:"atLine";i:30;}i:3;a:7:{s:6:"header";s:97:"public function getAdditionalFields(array &$taskInfo, $task, tx_scheduler_Module $parentObject) {";s:11:"parentClass";s:47:"tx_rss2import_scheduler_additionalfieldprovider";s:4:"cDat";a:3:{s:4:"text";s:499:"
+
+This method is used to define new fields for adding or editing a task
+In this case, it adds a feed field
+
+									The array is multidimensional, keyed to the task class name and each field's id
+									For each field it provides an associative sub-array with the following:
+										['code']		=> The HTML code for the field
+										['label']		=> The label of the field (possibly localized)
+										['cshKey']		=> The CSH key for the field
+										['cshLabel']	=> The code of the CSH label";s:5:"param";a:3:{i:0;a:2:{i:0;s:5:"array";i:1;s:79:"$taskInfo: reference to the array containing the info used in the add/edit form";}i:1;a:2:{i:0;s:6:"object";i:1;s:76:"$task: when editing, reference to the current task object. Null when adding.";}i:2;a:2:{i:0;s:19:"tx_scheduler_Module";i:1;s:70:"$parentObject: reference to the calling object (Scheduler's BE module)";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:70:"Array containg all the information pertaining to the additional fields";}}s:7:"content";a:2:{i:0;s:507:"
+		// Initialize extra field value
+		if (empty($taskInfo['feed'])) {
+			if ($parentObject->CMD == 'add') {
+				// In case of new task and if field is empty, set default sleep time
+				$taskInfo['feed'] = 0;
+			} else if ($parentObject->CMD == 'edit') {
+				// In case of edit, set to internal value if no data was submitted already
+				$taskInfo['feed'] = $task->feed;
+			} e
+[...]
+ecord',
+				'cshKey'   => '_MOD_tools_txschedulerM1',
+				'cshLabel' => $fieldID
+			);
+		}
+
+		return $additionalFields;
+	}
+
+	";i:1;i:1;}s:12:"content_size";i:1803;s:13:"content_lines";i:54;s:6:"atLine";i:48;}i:5;a:4:{s:6:"header";s:100:"public function validateAdditionalFields(array &$submittedData, tx_scheduler_Module $parentObject) {";s:11:"parentClass";s:47:"tx_rss2import_scheduler_additionalfieldprovider";s:4:"cDat";a:3:{s:4:"text";s:152:"
+
+This method checks any additional data that is relevant to the specific task
+If the task class is not relevant, the method is expected to return true
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"array";i:1;s:80:"$submittedData: reference to the array containing the data submitted by the user";}i:1;a:2:{i:0;s:19:"tx_scheduler_Module";i:1;s:70:"$parentObject: reference to the calling object (Scheduler's BE module)";}}s:6:"return";a:2:{i:0;s:7:"boolean";i:1;s:78:"True if validation was ok (or selected class is not relevant), false otherwise";}}s:6:"atLine";i:111;}i:7;a:7:{s:6:"header";s:85:"public function saveAdditionalFields(array $submittedData, tx_scheduler_Task $task) {";s:11:"parentClass";s:47:"tx_rss2import_scheduler_additionalfieldprovider";s:4:"cDat";a:3:{s:4:"text";s:106:"
+
+This method is used to save any additional input into the current task object
+if the task class matches
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"array";i:1;s:63:"$submittedData: array containing the data submitted by the user";}i:1;a:2:{i:0;s:17:"tx_scheduler_Task";i:1;s:43:"$task: reference to the current task object";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:7:"content";a:2:{i:0;s:327:"		$task->feed = $submittedData['feed'];
+	}
+}
+
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rss2_import/class.tx_rss2import_scheduler_additionalfieldprovider'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rss2_import/class.tx_rss2import_scheduler_additionalfieldprovider.php']);
+}
+
+?>";i:1;i:0;}s:12:"content_size";i:327;s:13:"content_lines";i:8;s:6:"atLine";i:132;}}s:10:"usageCount";a:4:{s:12:"H_0d44de6c30";a:2:{s:24:"_searchtime_milliseconds";d:5;s:15:"_functionHeader";s:103:"class tx_rss2import_scheduler_additionalfieldprovider implements tx_scheduler_AdditionalFieldProvider {";}s:12:"H_d3089eb2e3";a:2:{s:24:"_searchtime_milliseconds";d:12;s:15:"_functionHeader";s:97:"public function getAdditionalFields(array &$taskInfo, $task, tx_scheduler_Module $parentObject) {";}s:12:"H_282dc96bac";a:2:{s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:100:"public function validateAdditionalFields(array &$submittedData, tx_scheduler_Module $parentObject) {";}s:12:"H_a2dd8e0eb5";a:2:{s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:85:"public function saveAdditionalFields(array $submittedData, tx_scheduler_Task $task) {";}}}s:14:"MD5_bd6897df4b";a:5:{s:8:"filename";s:37:"class.tx_rss2import_tcemainprocdm.php";s:8:"filesize";i:2892;s:6:"header";a:5:{s:4:"text";s:202:"
+
+Use hook to observe if updates are hapening to a tt_news content element. When that happens,
+check if the content element is changed in any of the fields set in the Extension Manager
+for RSS2 Import.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}s:5:"other";a:2:{i:0;s:45:"@author	Morten Tranberg Hansen <mth@cs.au.dk>";i:1;s:41:"@author	Kasper Ligaard <kasperl@cs.au.dk>";}s:11:"other_index";a:1:{s:7:"@author";a:2:{i:0;s:37:"Morten Tranberg Hansen <mth@cs.au.dk>";i:1;s:33:"Kasper Ligaard <kasperl@cs.au.dk>";}}}s:3:"DAT";a:1:{i:1;a:8:{s:6:"header";s:35:"class tx_rss2import_tcemainprocdm {";s:5:"class";i:1;s:11:"parentClass";s:27:"tx_rss2import_tcemainprocdm";s:4:"cDat";a:5:{s:4:"text";s:203:"
+
+Use hook to observe if updates are hapening to a tt_news content element. When that happens,
+check if the content element is changed in any of the fields set in the Extension Manager
+for RSS2 Import.
+
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}s:5:"other";a:2:{i:0;s:45:"@author	Morten Tranberg Hansen <mth@cs.au.dk>";i:1;s:41:"@author	Kasper Ligaard <kasperl@cs.au.dk>";}s:11:"other_index";a:1:{s:7:"@author";a:2:{i:0;s:37:"Morten Tranberg Hansen <mth@cs.au.dk>";i:1;s:33:"Kasper Ligaard <kasperl@cs.au.dk>";}}}s:7:"content";a:2:{i:0;s:1571:"	public function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$reference) {
+		// First 'listen' if it is RSS2 Import itself that are doing the update.
+		 if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rss2_import']['import_in_progress'])) {
+		 	// t3lib_div::devLog('RSS2 Import is doing the import: Do not set edited flag', 'rss2_import', 1);
+		 	return;
+		 }
+
+		// If update of tt_news record, mark it as edited, unless RSS2 Import is not the one doing the update.
+		if($table === 'tt_news' && $status === 'update') {
+			$oldData = t3lib_befunc::getRecord('tt_news', $id);
+
+			// Get list of fields to check for modification. These are set in the Extension Manager.
+			$compare = t3lib_div::trimExplode(',', $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rss2_import']['edited_fields']);
+
+			foreach($compare as $field) {
+				if (isset($fieldArray[$field]) && $fieldArray[$field] !== $oldData[$field]) {
+					// Build datamap
+					$data = array();
+					$data[$table][$id]['tx_rss2import_edited'] = 1;
+
+					// The next few lines are described in Typo3 Core API, section "Using t3lib_TCEmain in scripts".
+					$tce = t3lib_div::makeInstance('t3lib_TCEmain');
+					$tce->stripslashes_values = 0;
+					$tce->start($data, array());
+					$tce->process_datamap();
+					break;
+				}
+			}
+		}
+	}
+}
+
+if (defined("TYPO3_MODE") && isset($TYPO3_CONF_VARS[TYPO3_MODE]["XCLASS"]["ext/rss2_import/class.tx_rss2import_tcemainprocdm.php"])) {
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]["XCLASS"]["ext/rss2_import/class.tx_rss2import_tcemainprocdm.php"]);
+}
+
+?>
+";i:1;i:-1;}s:12:"content_size";i:1571;s:13:"content_lines";i:37;s:6:"atLine";i:30;}}s:10:"usageCount";a:1:{s:12:"H_d597f1a787";a:2:{s:24:"_searchtime_milliseconds";d:5;s:15:"_functionHeader";s:35:"class tx_rss2import_tcemainprocdm {";}}}s:14:"MD5_8fd1b38e74";a:4:{s:8:"filename";s:16:"ext_autoload.php";s:8:"filesize";i:510;s:6:"header";N;s:3:"DAT";a:0:{}}s:14:"MD5_28b11e99ee";a:4:{s:8:"filename";s:14:"ext_emconf.php";s:8:"filesize";i:2691;s:6:"header";N;s:3:"DAT";a:0:{}}s:14:"MD5_650ba9004d";a:4:{s:8:"filename";s:17:"ext_localconf.php";s:8:"filesize";i:1693;s:6:"header";N;s:3:"DAT";a:0:{}}s:14:"MD5_78af9ebebb";a:4:{s:8:"filename";s:14:"ext_tables.php";s:8:"filesize";i:1640;s:6:"header";N;s:3:"DAT";a:0:{}}s:14:"MD5_a3d98baa72";a:4:{s:8:"filename";s:7:"tca.php";s:8:"filesize";i:6767;s:6:"header";N;s:3:"DAT";a:0:{}}s:14:"MD5_34a46c2274";a:5:{s:8:"filename";s:19:"converters/utf8.inc";s:8:"filesize";i:7458;s:6:"header";N;s:3:"DAT";a:4:{i:1;a:7:{s:6:"header";s:38:"class UnicodeAndUTF8StringConversion {";s:5:"class";i:1;s:11:"parentClass";s:30:"UnicodeAndUTF8StringConversion";s:7:"content";a:2:{i:0;s:2:"
+	";i:1;i:-1;}s:12:"content_size";i:2;s:13:"content_lines";i:1;s:6:"atLine";i:49;}i:3;a:7:{s:6:"header";s:45:"public static function utf8ToUnicode(&$str) {";s:11:"parentClass";s:30:"UnicodeAndUTF8StringConversion";s:4:"cDat";a:3:{s:4:"text";s:296:"
+
+Takes an UTF-8 string and returns an array of ints representing the
+Unicode characters. Astral planes are supported ie. the ints in the
+output can be > 0xFFFF. Occurrances of the BOM are ignored. Surrogates
+are not allowed.
+
+Returns false if the input string isn't a valid UTF-8 octet sequence.";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$$str: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";a:2:{i:0;s:507:"		$mState = 0;     // cached expected number of octets after the current octet
+		// until the beginning of the next UTF8 character sequence
+		$mUcs4  = 0;     // cached Unicode character
+		$mBytes = 1;     // cached expected number of octets in the current sequence
+
+		$out = array();
+
+		$len = strlen($str);
+		for($i = 0; $i < $len; $i++) {
+			$in = ord($str{$i});
+			if (0 
+[...]
+State != 0))
+					 *
+					 * Incomplete multi-octet sequence.
+					 */
+					return false;
+				}
+			}
+		}
+		return $out;
+	}
+
+	";i:1;i:1;}s:12:"content_size";i:3372;s:13:"content_lines";i:110;s:6:"atLine";i:62;}i:5;a:4:{s:6:"header";s:58:"public static function unicodeToUtf8(array &$codepoints) {";s:11:"parentClass";s:30:"UnicodeAndUTF8StringConversion";s:4:"cDat";a:3:{s:4:"text";s:88:"
+
+Takes an array of ints representing the Unicode characters and returns
+a UTF-8 string.";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:24:"$array &$codepoints: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:6:"atLine";i:180;}i:7;a:6:{s:6:"header";s:58:"private static function codepointToUTF8Char ($codepoint) {";s:11:"parentClass";s:30:"UnicodeAndUTF8StringConversion";s:7:"content";a:2:{i:0;s:507:"		$utf8char = '';
+		if($codepoint < 0) {
+			// Nothing to do.
+		} else if ( $codepoint <= 0x007f) {
+			$utf8char = chr($codepoint);
+		} else if ($codepoint <= 0x07ff) {
+			$utf8char = chr(0xc0 | ($codepoint >> 6));
+			$utf8char .= chr(0x80 | ($codepoint & 0x003f));
+		} else if($codepoint === 0xFEFF) {
+			// nop -- zap the BOM
+		} else if ($codepoint >= 0xD800 && $codepoint
+[...]
+f8char .= chr(0x80 | ($codepoint & 0x3f));
+		} else {
+			// out of range
+			// Nothing to do.
+		}
+		return $utf8char;
+	}
+}
+?>";i:1;i:1;}s:12:"content_size";i:957;s:13:"content_lines";i:29;s:6:"atLine";i:195;}}s:10:"usageCount";a:4:{s:12:"H_1aa4ed9a21";a:2:{s:24:"_searchtime_milliseconds";d:10;s:15:"_functionHeader";s:38:"class UnicodeAndUTF8StringConversion {";}s:12:"H_451a81454e";a:4:{s:3:"ALL";a:2:{s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_f1dc5e6483";a:3:{s:8:"fileName";s:27:"converters/vcal-to-rss2.php";s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:45:"public static function utf8ToUnicode(&$str) {";}s:12:"H_693014e365";a:4:{s:3:"ALL";a:2:{s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_f1dc5e6483";a:3:{s:8:"fileName";s:27:"converters/vcal-to-rss2.php";s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:58:"public static function unicodeToUtf8(array &$codepoints) {";}s:12:"H_c68ac7cbcc";a:4:{s:3:"ALL";a:2:{s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_34a46c2274";a:3:{s:8:"fileName";s:19:"converters/utf8.inc";s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:58:"private static function codepointToUTF8Char ($codepoint) {";}}}s:14:"MD5_f1dc5e6483";a:5:{s:8:"filename";s:27:"converters/vcal-to-rss2.php";s:8:"filesize";i:11382;s:6:"header";N;s:3:"DAT";a:7:{i:1;a:7:{s:6:"header";s:23:"class AU_Vcal_To_RSS2 {";s:5:"class";i:1;s:11:"parentClass";s:15:"AU_Vcal_To_RSS2";s:7:"content";a:2:{i:0;s:4035:"	public static function convert ($calUrl) {
+		/*
+		 *  TODO: RFC 2445 actually states that only CRLF can be used as line-ending. Here
+		 *  we are satisfied with just removing Unix-style newline line-ending characters.
+		 */
+		$vcalFolded = file($calUrl, FILE_IGNORE_NEW_LINES);
+		# RFC 2445 says that long lines can be folded and
+		# that we must unfold them before doing anything else.
+		$vcal = array();
+		$eventLine = "";
+		foreach ($vcalFolded as $line) {
+			if (substr($line, 0, 1) === chr(32) || substr($line, 0, 1) === chr(9)) {
+				$eventLine .= substr($line, 1);
+			} else {
+				$vcal[] = $eventLine;
+				$eventLine = $line;
+			}
+		}
+		$vcal = self::washUTF8ToXML($vcal);
+
+		# Build array of events.
+		$events = array();
+		$eventId = 0;
+		foreach ($vcal as $calLine) {
+			if (preg_match('/^BEGIN:VCALENDAR/u', $calLine)) {
+				// $eventId++;
+				//$events[$eventId] = array();
+				continue;
+			} else if (preg_match('/^BEGIN:VEVENT/u', $calLine)) {
+				$events[$eventId] = array();
+			} else if (preg_match('/^X-ORACLE-EVENTINSTANCE-GUID[^:]*:/u', $calLine)) {
+				$calLine = preg_replace('/^X-ORACLE-EVENTINSTANCE-GUID[^:]*:(.*)$/u','$1', $calLine);
+				$events[$eventId]['guid'] = $calLine;
+			} else if (preg_match('/^CREATED[^:]*:(.*)$/u', $calLine)) {
+				$calLine = preg_replace('/^CREATED[^:]*:(.*)$/u','$1', $calLine);
+				$timestamp = strtotime($calLine);
+				$events[$eventId]['pubDate'] = date(DATE_RSS, $timestamp);
+			} else if (preg_match('/^DTSTART[^:]*:(.*)$/u', $calLine)) {
+				$calLine = preg_replace('/^DTSTART[^:]*:(.*)$/u','$1', $calLine);
+				$timestamp = strtotime($calLine);
+				$events[$eventId]['startDate'] = date('D, j M Y 00:00:00 O', $timestamp);
+				$events[$eventId]['startTime'] = date('H:i:s', $timestamp);
+				$events[$eventId]['start'] = $timestamp;
+			} else if (preg_match('/^DTEND[^:]*:(.*)$/u', $calLine)) {
+				$calLine = preg_replace('/^DTEND[^:]*:(.*)$/u','$1', $calLine);
+				$timestamp = strtotime($calLine);
+				$events[$eventId]['endDate'] = date('D, j M Y 00:00:00 O', $timestamp);
+				$events[$eventId]['endTime'] = date('H:i:s', $timestamp);
+				$events[$eventId]['end'] = $timestamp;
+			} else if (preg_match('/^LOCATION[^:]*:(.*)$/u', $calLine)) {
+				$calLine = preg_replace('/^LOCATION[^:]*:(.*)$/u','$1', $calLine);
+				$calLine = self::substFormatting($calLine);
+				$events[$eventId]['LOCATION'] = $calLine;
+			} else if (preg_match('/^DESCRIPTION[^:]*:(.*)$/u', $calLine)) {
+				$calLine = preg_replace('/^DESCRIPTION[^:]*:(.*)$/u','$1', $calLine);
+				$calLine = self::substFormatting($calLine);
+				$events[$eventId]['DESCRIPTION'] = $calLine;
+			} else if (preg_match('/^SUMMARY[^:]*:/u', $calLine)) {
+				$calLine = preg_replace('/^SUMMARY[^:]*:(.*)$/u','$1', $calLine);
+				$calLine = self::substFormatting($calLine);
+				$events[$eventId]['SUMMARY'] = $calLine;
+			} else if (preg_match('/^ORGANIZER.*;CN=(.*)$/u', $calLine)) {
+				$calLine = preg_replace('/^ORGANIZER.*;CN=(.*)$/u','$1', $calLine);
+				$events[$eventId]['ORGANIZER'] = preg_replace('/^([^:]+):.*$/u','$1', $calLine);
+				$events[$eventId]['ORGANIZER']= trim($events[$eventId]['ORGANIZER'], '"');
+				$events[$eventId]['ORGANIZEREMAIL'] = preg_replace('/.*:mailto:(.*)$/u', '$1', $calLine);
+			} else if (preg_match('/^END:VEVENT/u', $calLine)) {
+				// $events[$eventId]['VEVENT'] = $calLine;
+				$eventId++;
+			} else if (preg_match('/^END:VCALENDAR/u', $calLine)) {
+				// $events[$eventId]['VCALENDAR'] = $calLine;
+			}
+		}
+
+		//Newest events first, please (sorting)
+		$sortedEvents = array ();
+		foreach ($events as $event) {
+			$sortedEvents[] = array (strtotime($event['pubDate']),$event);
+		}
+		arsort($sortedEvents);
+		$events = array ();
+		foreach($sortedEvents as $event) {
+			$events[] = $event[1];
+		}
+
+		$xml = self::feedHeader($calUrl);
+
+		$xml .= self::feedContents($events);
+
+		$xml .= self::feedFooter();
+
+		$dom = new DOMDocument();
+		$dom->loadXML($xml);
+		$dom->formatOutput = true;
+
+		header('Content-type: application/xml; charset=UTF-8');
+		print $dom->saveXML();
+	}
+
+	";i:1;i:-1;}s:12:"content_size";i:4035;s:13:"content_lines";i:99;s:6:"atLine";i:5;}i:3;a:6:{s:6:"header";s:43:"private static function feedHeader($link) {";s:11:"parentClass";s:15:"AU_Vcal_To_RSS2";s:7:"content";a:2:{i:0;s:507:"		$feedHeader = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+		$feedHeader .= '<rss version="2.0" xmlns="http://www.cs.au.dk/" xmlns:daimical="http://www.cs.au.dk/~mkh/typo3/test/daimi-calendar-namespace.php">' . "\n";
+		$feedHeader .= '  <channel>' . "\n";
+		$feedHeader .= '    <title>Recent and upcoming events</title>' . "\n";
+		$feedHeader .= '    <link>' . $link . 
+[...]
+>' . "\n";
+		$feedHeader .= '    <lastBuildDate>' . date(DATE_RSS) . '</lastBuildDate>' . "\n\n";
+		return $feedHeader;
+	}
+
+	";i:1;i:1;}s:12:"content_size";i:1268;s:13:"content_lines";i:21;s:6:"atLine";i:111;}i:5;a:6:{s:6:"header";s:54:"private static function feedContents (array $events) {";s:11:"parentClass";s:15:"AU_Vcal_To_RSS2";s:7:"content";a:2:{i:0;s:507:"		$category = ""; // Placeholder.
+		$emptyEvent = array(
+			'SUMMARY' => '',
+			'ORGANIZER' => '',
+			'ORGANIZEREMAIL' => '',
+			'pubDate' => '',
+			'startDate' => '',
+			'endDate' => '',
+			'startTime' => '',
+			'endTime' => '',
+			'LOCATION' => '',
+			'DESCRIPTION' => '',
+			'guid' => ''
+		);
+		$contents = '';
+		foreach ($events as $event) {
+			$event = array_merge($empt
+[...]
+ate'] . ']]></pubDate>' . "\n";
+			$item .= '    </item>' . "\n";
+			$contents .= $item . "\n";
+		}
+		return $contents;
+	}
+
+	";i:1;i:1;}s:12:"content_size";i:1943;s:13:"content_lines";i:39;s:6:"atLine";i:139;}i:7;a:6:{s:6:"header";s:39:"private static function feedFooter () {";s:11:"parentClass";s:15:"AU_Vcal_To_RSS2";s:7:"content";a:2:{i:0;s:165:"		$feedFooter = '  </channel>' . "\n";
+		$feedFooter .= '</rss>' . "\n";
+		return $feedFooter;
+	}
+	// Function substitutes the backslash-quoted parts of the strings.";i:1;i:0;}s:12:"content_size";i:165;s:13:"content_lines";i:4;s:6:"atLine";i:184;}i:9;a:6:{s:6:"header";s:48:"private static function substFormatting ($str) {";s:11:"parentClass";s:15:"AU_Vcal_To_RSS2";s:7:"content";a:2:{i:0;s:245:"		$str = str_replace("\\n\\n","\n\n",$str);
+		$str = str_replace("\\n","\n",$str);
+		$str = str_replace("\\,",",",$str);
+		return $str;
+	}
+
+	/*
+	 * 'Washes' the contents given, so that characters that are not allowed in XML
+	 * are removed.
+	 */";i:1;i:0;}s:12:"content_size";i:245;s:13:"content_lines";i:9;s:6:"atLine";i:190;}i:11;a:3:{s:6:"header";s:57:"private static function washUTF8ToXML (array $contents) {";s:11:"parentClass";s:15:"AU_Vcal_To_RSS2";s:6:"atLine";i:201;}i:13;a:6:{s:6:"header";s:104:"private static function removeIllegalXMLCharacters (array $codepoints, $removeDiscouragedChars = true) {";s:11:"parentClass";s:15:"AU_Vcal_To_RSS2";s:7:"content";a:2:{i:0;s:507:"		$filteredCodepoints = array();
+		foreach ($codepoints as $codepoint) {
+			if ($removeDiscouragedChars) {
+				if (($codepoint >= 0x7F && $codepoint <= 0x84) ||
+					($codepoint >= 0x86 && $codepoint <= 0x9F) ||
+					($codepoint >= 0xFDD0 && $codepoint <= 0xFDEF) ||
+					$codepoint === 0x1FFFE || $codepoint === 0x1FFFF || // Top 'bits' in plane 1
+					$codepoint === 0x2FFF
+[...]
+ilteredCodepoints[] = $codepoint;
+			}
+		}
+		return $filteredCodepoints;
+	}
+}
+AU_Vcal_To_RSS2::convert($_GET['vcalurl']);
+?>
+";i:1;i:1;}s:12:"content_size";i:2132;s:13:"content_lines";i:42;s:6:"atLine";i:226;}}s:10:"usageCount";a:7:{s:12:"H_2381b11ba6";a:2:{s:24:"_searchtime_milliseconds";d:27;s:15:"_functionHeader";s:23:"class AU_Vcal_To_RSS2 {";}s:12:"H_65335d1bde";a:4:{s:3:"ALL";a:2:{s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_f1dc5e6483";a:3:{s:8:"fileName";s:27:"converters/vcal-to-rss2.php";s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:4;s:15:"_functionHeader";s:43:"private static function feedHeader($link) {";}s:12:"H_88a93842f9";a:4:{s:3:"ALL";a:2:{s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_f1dc5e6483";a:3:{s:8:"fileName";s:27:"converters/vcal-to-rss2.php";s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:10;s:15:"_functionHeader";s:54:"private static function feedContents (array $events) {";}s:12:"H_4cb2afbd00";a:4:{s:3:"ALL";a:2:{s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_f1dc5e6483";a:3:{s:8:"fileName";s:27:"converters/vcal-to-rss2.php";s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:3;s:15:"_functionHeader";s:39:"private static function feedFooter () {";}s:12:"H_4f81958d9a";a:4:{s:3:"ALL";a:2:{s:14:"nonObjectUsage";i:3;s:5:"TOTAL";i:3;}s:14:"MD5_f1dc5e6483";a:3:{s:8:"fileName";s:27:"converters/vcal-to-rss2.php";s:14:"nonObjectUsage";i:3;s:5:"TOTAL";i:3;}s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:48:"private static function substFormatting ($str) {";}s:12:"H_4e5ec4751b";a:4:{s:3:"ALL";a:2:{s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_f1dc5e6483";a:3:{s:8:"fileName";s:27:"converters/vcal-to-rss2.php";s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:7;s:15:"_functionHeader";s:57:"private static function washUTF8ToXML (array $contents) {";}s:12:"H_d7f6f0f949";a:4:{s:3:"ALL";a:2:{s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_f1dc5e6483";a:3:{s:8:"fileName";s:27:"converters/vcal-to-rss2.php";s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:4;s:15:"_functionHeader";s:104:"private static function removeIllegalXMLCharacters (array $codepoints, $removeDiscouragedChars = true) {";}}}s:14:"MD5_4b9c1d3a5f";a:5:{s:8:"filename";s:32:"formatters/user_AU_Buildings.php";s:8:"filesize";i:7786;s:6:"header";N;s:3:"DAT";a:3:{i:1;a:7:{s:6:"header";s:25:"class user_AU_Buildings {";s:5:"class";i:1;s:11:"parentClass";s:17:"user_AU_Buildings";s:7:"content";a:2:{i:0;s:408:"	// Note: The buildings constants are defined below.
+
+	/*
+	 * Converts a textual location to a map. Some heuristics are used, so it is a
+	 * 'best effort' guess.
+	 *
+	 * Options could be date and time.
+	 *  - parking lot entrance
+	 *  - parking lot
+	 *  - building corners
+	 *  - building entrance
+	 *  - dates and times
+	 *  - remarks
+	 *
+	 * Returns a string with either a wrapped link or 'something'.
+	 */";i:1;i:-1;}s:12:"content_size";i:408;s:13:"content_lines";i:15;s:6:"atLine";i:0;}i:3;a:3:{s:6:"header";s:67:"public function textLocationToMap ($location, $options = array()) {";s:11:"parentClass";s:17:"user_AU_Buildings";s:6:"atLine";i:17;}i:5;a:6:{s:6:"header";s:81:"private static function itParkNameToBuildingNr ($name, $caseInsensitive = true) {";s:11:"parentClass";s:17:"user_AU_Buildings";s:7:"content";a:2:{i:0;s:507:"		$nameLower = mb_strToLower($name);
+		foreach (self::$itParkNames as $buildingNr => $itParkName) {
+			if ($caseInsensitive) {
+				$itParkName = mb_strToLower($itParkName);
+			}
+			if ($nameLower === $itParkName) {
+				return $buildingNr;
+			}
+		}
+		return $name;
+	}
+
+	private static $itParkNames = array(
+"5342" => "Ada",
+"5800" => "Adorno",
+"5340" => "Babbage",
+"5344" => "
+[...]
+g k06d',
+"k07b" => 'bygning k07b',
+"k09a" => 'bygning k09a',
+"k10d" => 'bygning k10d',
+"k18b" => 'bygning k18b'
+		)
+	)
+);
+}
+
+";i:1;i:1;}s:12:"content_size";i:6483;s:13:"content_lines";i:259;s:6:"atLine";i:34;}}s:10:"usageCount";a:3:{s:12:"H_6cbf81bcfb";a:2:{s:24:"_searchtime_milliseconds";d:18;s:15:"_functionHeader";s:25:"class user_AU_Buildings {";}s:12:"H_26b0fa34da";a:2:{s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:67:"public function textLocationToMap ($location, $options = array()) {";}s:12:"H_751118ac4a";a:4:{s:3:"ALL";a:2:{s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_4b9c1d3a5f";a:3:{s:8:"fileName";s:32:"formatters/user_AU_Buildings.php";s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:81:"private static function itParkNameToBuildingNr ($name, $caseInsensitive = true) {";}}}s:14:"MD5_0bf388ec84";a:5:{s:8:"filename";s:42:"formatters/user_AU_FixDescriptionField.php";s:8:"filesize";i:7472;s:6:"header";N;s:3:"DAT";a:5:{i:1;a:7:{s:6:"header";s:35:"class user_AU_FixDescriptionField {";s:5:"class";i:1;s:11:"parentClass";s:27:"user_AU_FixDescriptionField";s:7:"content";a:2:{i:0;s:72:"	public function __construct () {
+		mb_internal_encoding('UTF-8');
+	}
+
+	";i:1;i:-1;}s:12:"content_size";i:72;s:13:"content_lines";i:4;s:6:"atLine";i:15;}i:3;a:6:{s:6:"header";s:36:"public function fix ($description) {";s:11:"parentClass";s:27:"user_AU_FixDescriptionField";s:7:"content";a:2:{i:0;s:507:"		// These lines sanitize text that has line-breaks in paragraphs.
+		// (usually because the text was cut'n'pasted from an editor or terminal window).
+		$description = trim($description);
+
+		// Remove trailing 'stedkode' (SK), which are appended by the system because of some bureaucracy!
+		$description = preg_replace('/^(.*)SK: ?[0-9]{4}$/su', '$1', $description);
+		// Tri
+[...]
+ $description);
+		$description = preg_replace('/(\p{Zl}){2,}/u', '<br>', $description);
+		$description = preg_replace('/(\\n)";i:1;i:1;}s:12:"content_size";i:809;s:13:"content_lines";i:13;s:6:"atLine";i:26;}i:5;a:6:{s:6:"header";s:123:"public function newsLinkType($str, array $config = array('type' => INFO_TYPE_NEWS_EXTERNAL, 'default' => INFO_TYPE_NEWS)) {";s:11:"parentClass";s:27:"user_AU_FixDescriptionField";s:7:"content";a:2:{i:0;s:348:"		$type = constant($config['default']);
+		//check is the str is a vaild url and does not contains a " " space. If so they the news type should be changes to External Link.
+		if (preg_match("#^http(s)?://[a-z0-9-_.]+\.[a-z]{2,4}#i", $str) && strpos($str, ' ') === false) {
+			// Here we use the constants that are found in class tx_rss2import_helper";i:1;i:0;}s:12:"content_size";i:348;s:13:"content_lines";i:3;s:6:"atLine";i:134;}i:7;a:3:{s:6:"header";s:46:"public function devLogParams ($str, $config) {";s:11:"parentClass";s:27:"user_AU_FixDescriptionField";s:6:"atLine";i:145;}i:9;a:6:{s:6:"header";s:51:"public function timeToSecondsSinceMidnight ($str) {";s:11:"parentClass";s:27:"user_AU_FixDescriptionField";s:7:"content";a:2:{i:0;s:430:"		$parts = split(':', $str);
+		$hours = intval($parts[0]);
+		$hours = $hours >= 0 ? $hours : 0;
+		$hours = $hours <= 23 ? $hours : 23;
+		$minutes = intval($parts[1]);
+		$minutes = $minutes >= 0 ? $minutes : 0;
+		$minutes = $minutes <= 59 ? $minutes : 59;
+		$seconds = intval($parts[2]);
+		$seconds = $seconds >= 0 ? $seconds : 0;
+		$seconds = $seconds <= 59 ? $seconds : 59;
+		return $hours * 3600 + $minutes * 60 + $seconds;
+	}
+}";i:1;i:0;}s:12:"content_size";i:430;s:13:"content_lines";i:12;s:6:"atLine";i:151;}}s:10:"usageCount";a:5:{s:12:"H_b7687f347a";a:2:{s:24:"_searchtime_milliseconds";d:6;s:15:"_functionHeader";s:35:"class user_AU_FixDescriptionField {";}s:12:"H_f99625b6d1";a:2:{s:24:"_searchtime_milliseconds";d:4;s:15:"_functionHeader";s:36:"public function fix ($description) {";}s:12:"H_37fe033f1b";a:2:{s:24:"_searchtime_milliseconds";d:1;s:15:"_functionHeader";s:123:"public function newsLinkType($str, array $config = array('type' => INFO_TYPE_NEWS_EXTERNAL, 'default' => INFO_TYPE_NEWS)) {";}s:12:"H_51d4e54db2";a:2:{s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:46:"public function devLogParams ($str, $config) {";}s:12:"H_ffc23e9fd5";a:2:{s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:51:"public function timeToSecondsSinceMidnight ($str) {";}}}s:14:"MD5_efa2fdecb2";a:5:{s:8:"filename";s:35:"mod1/class.tx_rss2import_helper.php";s:8:"filesize";i:23474;s:6:"header";N;s:3:"DAT";a:15:{i:1;a:7:{s:6:"header";s:28:"class tx_rss2import_helper {";s:5:"class";i:1;s:11:"parentClass";s:20:"tx_rss2import_helper";s:7:"content";a:2:{i:0;s:144:"	private $maxTitleLength; //Only used for shortening the displayed title when importing, full title will be used when imported.
+	private $cObj;
+";i:1;i:-1;}s:12:"content_size";i:144;s:13:"content_lines";i:2;s:6:"atLine";i:34;}i:3;a:6:{s:6:"header";s:32:"public function __construct () {";s:11:"parentClass";s:20:"tx_rss2import_helper";s:7:"content";a:2:{i:0;s:38:"		mb_internal_encoding('UTF-8');
+	}
+
+	";i:1;i:0;}s:12:"content_size";i:38;s:13:"content_lines";i:3;s:6:"atLine";i:38;}i:5;a:7:{s:6:"header";s:73:"public function importFeeds(array $feedsToGet, $outputPlainText = true) {";s:11:"parentClass";s:20:"tx_rss2import_helper";s:4:"cDat";a:3:{s:4:"text";s:77:"
+
+Main function: Takes an array of feed UIDs to import, and imports them.
+**/";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:23:"$array $feedsToGet: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:21:"$outputPlainText: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";a:2:{i:0;s:507:"		global $LANG;
+		$content = '';
+		$this->cObj = t3lib_div::makeInstance('tslib_cObj');
+		$this->maxTitleLength = 40;
+
+		// Load the formatter classes. These are set in the Extension Manager and resides in
+		// the directory EXT:rss2_import/formatters/
+		$formatters = t3lib_div::trimExplode(',', $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rss2_import']['formatters'], true);
+		
+[...]
+
+				);
+			}
+			$this->processDataMap($data);
+		}
+
+		if (!$outputPlainText) $content .= '</table>';
+
+		return $content;
+	}
+
+	";i:1;i:1;}s:12:"content_size";i:6778;s:13:"content_lines";i:162;s:6:"atLine";i:50;}i:7;a:7:{s:6:"header";s:128:"private function updateItem(array $item, array $record, array $feed, $outputPlainText = false, array $extraMappings = array()) {";s:11:"parentClass";s:20:"tx_rss2import_helper";s:4:"cDat";a:3:{s:4:"text";s:35:"
+
+Updates existing news record.
+**/";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:45:"$array $item, array $record, array $feed: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:21:"$outputPlainText: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";a:2:{i:0;s:507:"		$status = 'N/A';
+		//If we may update the element, do it.
+		if (!empty($record['tx_rss2import_edited']) && empty($feed['override_edited'])) {
+			$status = '<span class="tx-rss2-import-status-not-overridden" title="Override not allowed for this feed, when entry has been modified locally">Modified locally, not overridden.</span>';
+			if ($outputPlainText) {
+				$status = '
+[...]
+ed';
+			} else {
+				$status = '<span class="tx-rss2-import-status-updated">Updated</span>';
+			}
+		}
+		return $status;
+	}
+
+	";i:1;i:1;}s:12:"content_size";i:2280;s:13:"content_lines";i:51;s:6:"atLine";i:221;}i:9;a:7:{s:6:"header";s:113:"private function insertItem(array $item, array $feed, $outputPlainText = false, array $extraMappings = array()) {";s:11:"parentClass";s:20:"tx_rss2import_helper";s:4:"cDat";a:3:{s:4:"text";s:41:"
+
+Inserts new news element from feed.
+**/";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:30:"$array $item, array $feed: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:21:"$outputPlainText: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";a:2:{i:0;s:507:"		//Get associated image from enclosure, if any.
+		$image='';
+		if ($feed['import_images']) {
+			if(count($item['enclosure']) > 1 && is_numeric($item['enclosure']['LENGTH'])) {
+				$image = $this->getImage($item['enclosure']['TYPE'], $item['enclosure']['URL'], $item['enclosure']['LENGTH']);
+			}
+			// Added Support for media tag - 2010-08-07 Stefan Busemann / in2code.de
+		
+[...]
+>processDataMap($data);
+
+		$status = '<span class="tx-rss2-import-status-imported">Inserted</span>';
+		if ($outputPlainText) ";i:1;i:1;}s:12:"content_size";i:1630;s:13:"content_lines";i:38;s:6:"atLine";i:281;}i:11;a:6:{s:6:"header";s:61:"private function fixAuthorAndEmail (&$fields_values, $feed) {";s:11:"parentClass";s:20:"tx_rss2import_helper";s:7:"content";a:2:{i:0;s:80:"		if (empty($fields_values['author']) && empty($fields_values['author_email'])) ";i:1;i:0;}s:12:"content_size";i:80;s:13:"content_lines";i:0;s:6:"atLine";i:331;}i:13;a:6:{s:6:"header";s:83:"private function mapInternalOrExternal (array $fields_values, array $item, $type) {";s:11:"parentClass";s:20:"tx_rss2import_helper";s:7:"content";a:2:{i:0;s:78:"		// Insert the element, either internal or external.
+		switch(intval($type)) ";i:1;i:0;}s:12:"content_size";i:78;s:13:"content_lines";i:1;s:6:"atLine";i:341;}i:15;a:6:{s:6:"header";s:95:"private function mergeExtraMappings (array $fields_values, array $item, array $extraMappings) {";s:11:"parentClass";s:20:"tx_rss2import_helper";s:7:"content";a:2:{i:0;s:507:"		foreach ($extraMappings as $namespace => $extraMappingNS) {
+			$namespace = substr($namespace,0,-1); //remove '.'
+			if (is_array($extraMappingNS)) {
+				foreach($extraMappingNS as $entryName => $fieldName) { // e.g. start-date => tx_aunewsevent_from
+					if (is_string($fieldName)) {
+						if (isset($item[$namespace][$entryName]['data']) ||
+							($namespace === 'xmlns'
+[...]
+fieldName: ' . gettype($fieldName), 'rss2_import', 1, $extraMappingNS);
+					}
+				}
+			}
+		}
+		return $fields_values;
+	}
+
+
+	";i:1;i:1;}s:12:"content_size";i:1636;s:13:"content_lines";i:40;s:6:"atLine";i:366;}i:17;a:7:{s:6:"header";s:49:"public function getFeeds(array $uids = array()) {";s:11:"parentClass";s:20:"tx_rss2import_helper";s:4:"cDat";a:3:{s:4:"text";s:77:"
+
+Get feed info from database, either all feeds or from an array of uids.
+**/";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:17:"$array $uids: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";a:2:{i:0;s:559:"		$uidWhere = '';
+		foreach ($uids as $uid) {
+			$uidWhere .= $uidWhere ? ' OR uid LIKE \''.$uid.'\'' : 'uid LIKE \''.$uid.'\'';
+		}
+		$uidWhere = $uidWhere ? '('.$uidWhere.')' : '1=1';
+		// Get availible feed records.
+		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+			'*',
+			'tx_rss2import_feeds',
+		$uidWhere .
+		t3lib_befunc::BEenableFields('tx_rss2import_feeds') .
+		t3lib_befunc::deleteClause('tx_rss2import_feeds')
+		);
+		$feeds = array();
+		while($feed = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			$feeds[] = $feed;
+		}
+		return $feeds;
+	}
+
+	";i:1;i:0;}s:12:"content_size";i:559;s:13:"content_lines";i:20;s:6:"atLine";i:414;}i:19;a:7:{s:6:"header";s:39:"private function getUid($item, $feed) {";s:11:"parentClass";s:20:"tx_rss2import_helper";s:4:"cDat";a:3:{s:4:"text";s:39:"
+
+Generate a valid RSS2 Import uid.
+**/";s:5:"param";a:2:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$item: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:10:"$feed: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";a:2:{i:0;s:497:"		$result = '';
+
+		$prefix = !empty($feed['guid_prefix']) ? $feed['guid_prefix'] : $feed['url'];
+
+		if($item['guid']) {                                      //uid from guid
+			$result = 'guid:' . $prefix . $item['guid'];
+		} else if ($item['link']) {                               //uid from link
+			$result = 'link:' . $prefix . $item['link'];
+		} else {
+			t3lib::devLog('Unable to generate valid uid.','RSS Import', 1, array('item' => $item, 'feed' => $feed));
+		}
+		return trim($result);
+	}
+
+	";i:1;i:0;}s:12:"content_size";i:497;s:13:"content_lines";i:14;s:6:"atLine";i:443;}i:21;a:7:{s:6:"header";s:37:"public function getAutoUpdateUids() {";s:11:"parentClass";s:20:"tx_rss2import_helper";s:4:"cDat";a:3:{s:4:"text";s:92:"
+
+Get the uids from the feeds that are allowed to automatically update (Used in gabriel)
+**/";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";a:2:{i:0;s:446:"		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid',
+                                                 'tx_rss2import_feeds',
+                                                 'auto_update_gabriel=1' .
+		t3lib_befunc::BEenableFields('tx_rss2import_feeds') .
+		t3lib_befunc::deleteClause('tx_rss2import_feeds'));
+		$uids = array();
+		while($feed = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			$uids[] = $feed['uid'];
+		}
+		return $uids;
+	}
+
+	";i:1;i:0;}s:12:"content_size";i:446;s:13:"content_lines";i:12;s:6:"atLine";i:464;}i:23;a:7:{s:6:"header";s:49:"private function getImage($type, $url, $length) {";s:11:"parentClass";s:20:"tx_rss2import_helper";s:4:"cDat";a:3:{s:4:"text";s:75:"
+
+Function to extract info, download and resize images from feed items.
+**/";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$type: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:9:"$url: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:12:"$length: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";a:2:{i:0;s:507:"		$filename='';
+		$type = explode('/', mb_strtolower($type));
+		//Only continue if one of following file extensions
+		if($type[0]=='image' && ($type[1]=='gif' || $type[1]=='jpeg' || $type[1]=='png')) {
+			$filename = $url;
+			if (mb_substr(mb_strtolower($filename),0,7) === 'http://') {
+				$filename = mb_substr($filename,7);
+			}
+			$filename = str_replace('/','_',$filenam
+[...]
+th.$filename);
+							break;
+						default:
+							return '';
+					}
+				} else return '';
+			}
+		}
+		return $filename;
+	}
+
+	";i:1;i:1;}s:12:"content_size";i:1720;s:13:"content_lines";i:50;s:6:"atLine";i:486;}i:25;a:7:{s:6:"header";s:43:"private function parseFeedTSConfig($feed) {";s:11:"parentClass";s:20:"tx_rss2import_helper";s:4:"cDat";a:3:{s:4:"text";s:52:"
+
+Parse the extra TS config (eg. extraMappings).
+**/";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:10:"$feed: ...";}}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";a:2:{i:0;s:360:"		$tsString = $feed['typoscript_config'];
+		$TSparserObject = t3lib_div::makeInstance('t3lib_tsparser');
+		$TSparserObject->parse($tsString);
+		return $TSparserObject->setup;
+	}
+
+	/*
+	 * Convenience function
+	 *
+	 * returns the mapping of 'NEW' to the uid's they ended up having (it does not telle which table it was inserted into: You need to know that).
+	 */";i:1;i:0;}s:12:"content_size";i:360;s:13:"content_lines";i:10;s:6:"atLine";i:544;}i:27;a:3:{s:6:"header";s:47:"private function processDataMap (array $data) {";s:11:"parentClass";s:20:"tx_rss2import_helper";s:6:"atLine";i:556;}i:29;a:6:{s:6:"header";s:42:"private function getFileType ($filename) {";s:11:"parentClass";s:20:"tx_rss2import_helper";s:7:"content";a:2:{i:0;s:507:"		debug($item['media']['thumbnail']['attrs']['URL'], __METHOD__ . ' at line ' . __LINE__);
+		$parts = explode('.', $item['media']['thumbnail']['attrs']['URL']);
+		$type = end($parts);
+		$mime_types = array(
+
+            'txt' => 'text/plain',
+            'htm' => 'text/html',
+            'html' => 'text/html',
+            'php' => 'text/html',
+            'css' => 'text/cs
+[...]
+php"])) {
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]["XCLASS"]["ext/rss2_import/mod1/class.tx_rss2import_helper.php"]);
+}
+?>
+";i:1;i:1;}s:12:"content_size";i:2545;s:13:"content_lines";i:73;s:6:"atLine";i:572;}}s:10:"usageCount";a:15:{s:12:"H_c616c80198";a:2:{s:24:"_searchtime_milliseconds";d:32;s:15:"_functionHeader";s:28:"class tx_rss2import_helper {";}s:12:"H_85fe8cf8c7";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_f613eb277b";a:3:{s:8:"fileName";s:41:"mod1/class.tx_rss2import_notification.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:32:"public function __construct () {";}s:12:"H_2def1fdbc3";a:7:{s:3:"ALL";a:2:{s:11:"objectUsage";i:4;s:5:"TOTAL";i:4;}s:14:"MD5_7883d29326";a:3:{s:8:"fileName";s:33:"class.tx_rss2import_scheduler.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_f613eb277b";a:3:{s:8:"fileName";s:41:"mod1/class.tx_rss2import_notification.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_19aaeae789";a:3:{s:8:"fileName";s:14:"mod1/index.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_f1fb711138";a:3:{s:8:"fileName";s:40:"scheduler/class.tx_rss2import_import.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:4;s:15:"_functionHeader";s:73:"public function importFeeds(array $feedsToGet, $outputPlainText = true) {";}s:12:"H_04403b6828";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_efa2fdecb2";a:3:{s:8:"fileName";s:35:"mod1/class.tx_rss2import_helper.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:3;s:15:"_functionHeader";s:128:"private function updateItem(array $item, array $record, array $feed, $outputPlainText = false, array $extraMappings = array()) {";}s:12:"H_e1f4a1bfc5";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_efa2fdecb2";a:3:{s:8:"fileName";s:35:"mod1/class.tx_rss2import_helper.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:5;s:15:"_functionHeader";s:113:"private function insertItem(array $item, array $feed, $outputPlainText = false, array $extraMappings = array()) {";}s:12:"H_975dfa8191";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_efa2fdecb2";a:3:{s:8:"fileName";s:35:"mod1/class.tx_rss2import_helper.php";s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:24:"_searchtime_milliseconds";d:4;s:15:"_functionHeader";s:61:"private function fixAuthorAndEmail (&$fields_values, $feed) {";}s:12:"H_22bfacdc10";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_efa2fdecb2";a:3:{s:8:"fileName";s:35:"mod1/class.tx_rss2import_helper.php";s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:24:"_searchtime_milliseconds";d:4;s:15:"_functionHeader";s:83:"private function mapInternalOrExternal (array $fields_values, array $item, $type) {";}s:12:"H_9aeea1074d";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_efa2fdecb2";a:3:{s:8:"fileName";s:35:"mod1/class.tx_rss2import_helper.php";s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:24:"_searchtime_milliseconds";d:14;s:15:"_functionHeader";s:95:"private function mergeExtraMappings (array $fields_values, array $item, array $extraMappings) {";}s:12:"H_ee28b200e4";a:6:{s:3:"ALL";a:2:{s:11:"objectUsage";i:3;s:5:"TOTAL";i:3;}s:14:"MD5_efa2fdecb2";a:3:{s:8:"fileName";s:35:"mod1/class.tx_rss2import_helper.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_19aaeae789";a:3:{s:8:"fileName";s:14:"mod1/index.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_f1fb711138";a:3:{s:8:"fileName";s:40:"scheduler/class.tx_rss2import_import.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:3;s:15:"_functionHeader";s:49:"public function getFeeds(array $uids = array()) {";}s:12:"H_d54c65d0ef";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:3;s:5:"TOTAL";i:3;}s:14:"MD5_efa2fdecb2";a:3:{s:8:"fileName";s:35:"mod1/class.tx_rss2import_helper.php";s:11:"objectUsage";i:3;s:5:"TOTAL";i:3;}s:24:"_searchtime_milliseconds";d:3;s:15:"_functionHeader";s:39:"private function getUid($item, $feed) {";}s:12:"H_415a7334a7";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_f613eb277b";a:3:{s:8:"fileName";s:41:"mod1/class.tx_rss2import_notification.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:9;s:15:"_functionHeader";s:37:"public function getAutoUpdateUids() {";}s:12:"H_203f4acc4f";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:4;s:5:"TOTAL";i:4;}s:14:"MD5_efa2fdecb2";a:3:{s:8:"fileName";s:35:"mod1/class.tx_rss2import_helper.php";s:11:"objectUsage";i:4;s:5:"TOTAL";i:4;}s:24:"_searchtime_milliseconds";d:3;s:15:"_functionHeader";s:49:"private function getImage($type, $url, $length) {";}s:12:"H_d21b0f8ef7";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_efa2fdecb2";a:3:{s:8:"fileName";s:35:"mod1/class.tx_rss2import_helper.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:43:"private function parseFeedTSConfig($feed) {";}s:12:"H_f7b27782d5";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:3;s:5:"TOTAL";i:3;}s:14:"MD5_efa2fdecb2";a:3:{s:8:"fileName";s:35:"mod1/class.tx_rss2import_helper.php";s:11:"objectUsage";i:3;s:5:"TOTAL";i:3;}s:24:"_searchtime_milliseconds";d:4;s:15:"_functionHeader";s:47:"private function processDataMap (array $data) {";}s:12:"H_2c519eab42";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_efa2fdecb2";a:3:{s:8:"fileName";s:35:"mod1/class.tx_rss2import_helper.php";s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:24:"_searchtime_milliseconds";d:3;s:15:"_functionHeader";s:42:"private function getFileType ($filename) {";}}}s:14:"MD5_f613eb277b";a:5:{s:8:"filename";s:41:"mod1/class.tx_rss2import_notification.php";s:8:"filesize";i:1594;s:6:"header";N;s:3:"DAT";a:2:{i:1;a:4:{s:6:"header";s:59:"class tx_rss2import_notification extends tx_gabriel_event {";s:5:"class";i:1;s:11:"parentClass";s:26:"tx_rss2import_notification";s:6:"atLine";i:8;}i:3;a:6:{s:6:"header";s:20:"function execute() {";s:11:"parentClass";s:26:"tx_rss2import_notification";s:7:"content";a:2:{i:0;s:507:"		global $LANG;
+		if($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rss2_import']['enable_gabriel']) {
+			$helper = new tx_rss2import_helper();
+			$uidsToImport = $helper->getAutoUpdateUids();
+			if (count($uidsToImport) === 0) {
+				t3lib_div::devLog('No feeds to autoupdate... Method: '.__METHOD__, $EXTKEY);
+			} else {
+				$result = $helper->importFeeds($uidsToImport, true);
+		
+[...]
+) {
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]["XCLASS"]["ext/rss2_import/mod1/class.tx_rss2import_notification.php"]);
+}
+?>
+";i:1;i:1;}s:12:"content_size";i:1017;s:13:"content_lines";i:22;s:6:"atLine";i:18;}}s:10:"usageCount";a:2:{s:12:"H_b55a757f47";a:4:{s:3:"ALL";a:2:{s:12:"makeinstance";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_90958d130c";a:3:{s:8:"fileName";s:20:"class.ext_update.php";s:12:"makeinstance";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:9;s:15:"_functionHeader";s:59:"class tx_rss2import_notification extends tx_gabriel_event {";}s:12:"H_dbc0c178c9";a:2:{s:24:"_searchtime_milliseconds";d:1;s:15:"_functionHeader";s:20:"function execute() {";}}}s:14:"MD5_e897723110";a:4:{s:8:"filename";s:13:"mod1/conf.php";s:8:"filesize";i:286;s:6:"header";N;s:3:"DAT";a:0:{}}s:14:"MD5_19aaeae789";a:5:{s:8:"filename";s:14:"mod1/index.php";s:8:"filesize";i:9673;s:6:"header";a:5:{s:4:"text";s:55:"
+
+Module 'RSS Import' for the 'rss2_import' extension.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}s:5:"other";a:1:{i:0;s:48:"@author	Morten Tranberg Hansen <mth@daimi.au.dk>";}s:11:"other_index";a:1:{s:7:"@author";a:1:{i:0;s:40:"Morten Tranberg Hansen <mth@daimi.au.dk>";}}}s:3:"DAT";a:9:{i:1;a:7:{s:6:"header";s:50:"class tx_rss2import_module1 extends t3lib_SCbase {";s:5:"class";i:1;s:11:"parentClass";s:21:"tx_rss2import_module1";s:7:"content";a:2:{i:0;s:300:"	private $pageinfo;
+	private $page_for_feeds;
+	private $image_max_width;
+	private $image_max_height;
+
+	private $helper;
+
+	/**
+	 * @var string the extension key
+	 */
+	const EXTENSION_KEY = 'rss2_import';
+	/**
+	 * @var string the relative path to this extension
+	 */
+	protected static $extensionPath;
+
+";i:1;i:-1;}s:12:"content_size";i:300;s:13:"content_lines";i:16;s:6:"atLine";i:35;}i:3;a:6:{s:6:"header";s:31:"public function __construct() {";s:11:"parentClass";s:21:"tx_rss2import_module1";s:7:"content";a:2:{i:0;s:507:"		global $BE_USER,$LANG,$BACK_PATH,$TCA_DESCR,$TCA,$CLIENT,$TYPO3_CONF_VARS;
+
+		parent::init();
+
+		$this->page_for_feeds = intval($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rss2_import']['page_for_feeds']);
+		$this->image_max_width = intval($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rss2_import']['image_max_width']);
+		$this->image_max_height = intval($GLOBALS['TYPO3_CONF_VARS']
+[...]
+EY);
+
+		//Create instance of the helper (the class with the actual magic)
+		$this->helper = new tx_rss2import_helper();
+	}
+
+	";i:1;i:1;}s:12:"content_size";i:617;s:13:"content_lines";i:14;s:6:"atLine";i:53;}i:5;a:7:{s:6:"header";s:30:"public function menuConfig()	{";s:11:"parentClass";s:21:"tx_rss2import_module1";s:4:"cDat";a:3:{s:4:"text";s:74:"
+
+Adds items to the ->MOD_MENU array. Used for the function menu selector.";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";a:2:{i:0;s:314:"		global $LANG;
+		$this->MOD_MENU = Array (
+			     "function" => Array (
+						  "1" => $LANG->getLL("function1"),
+		)
+		);
+		parent::menuConfig();
+	}
+
+	// If you chose "web" as main module, you will need to consider the $this->id parameter which will contain the uid-number of the page clicked in the page tree
+	";i:1;i:0;}s:12:"content_size";i:314;s:13:"content_lines";i:10;s:6:"atLine";i:73;}i:7;a:7:{s:6:"header";s:24:"public function main()	{";s:11:"parentClass";s:21:"tx_rss2import_module1";s:4:"cDat";a:3:{s:4:"text";s:66:"
+
+Main function of the module. Write the content to $this->content";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";a:2:{i:0;s:396:"		global $BE_USER,$LANG,$BACK_PATH,$TCA_DESCR,$TCA,$CLIENT,$TYPO3_CONF_VARS;
+
+		// Access check!
+		// The page will show only if there is a valid page and if this page may be viewed by the user
+		$this->pageinfo = t3lib_BEfunc::readPageAccess($this->id,$this->perms_clause);
+		$access = is_array($this->pageinfo) ? 1 : 0;
+
+		if (($this->id && $access) || ($BE_USER->user["admin"] && !$this->id))	";i:1;i:0;}s:12:"content_size";i:396;s:13:"content_lines";i:7;s:6:"atLine";i:89;}i:9;a:6:{s:6:"header";s:25:"function jumpToUrl(URL)	{";s:11:"parentClass";s:21:"tx_rss2import_module1";s:7:"content";a:2:{i:0;s:40:"						document.location = URL;
+					}
+
+	";i:1;i:0;}s:12:"content_size";i:40;s:13:"content_lines";i:3;s:6:"atLine";i:108;}i:11;a:6:{s:6:"header";s:38:"function checkUncheckAll(theElement) {";s:11:"parentClass";s:21:"tx_rss2import_module1";s:7:"content";a:2:{i:0;s:507:"                                          var theForm = theElement.form, z = 0;
+                                          for(i=0;i<theForm.length;i++) {
+                                            if(theForm[i].type == \'checkbox\' && theForm[i].name != \'checkall\') {
+                                              theForm[i].checked = theElement.checked;
+                 
+[...]
+header($LANG->getLL("title"));
+			$this->content.=$this->doc->spacer(5);
+			$this->content.=$this->doc->spacer(10);
+		}
+	}
+
+	";i:1;i:1;}s:12:"content_size";i:2145;s:13:"content_lines";i:49;s:6:"atLine";i:118;}i:13;a:7:{s:6:"header";s:32:"public function printContent()	{";s:11:"parentClass";s:21:"tx_rss2import_module1";s:4:"cDat";a:3:{s:4:"text";s:28:"
+
+Prints out the module HTML";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";a:2:{i:0;s:72:"
+		$this->content .= $this->doc->endPage();
+		echo $this->content;
+	}
+
+	";i:1;i:0;}s:12:"content_size";i:72;s:13:"content_lines";i:5;s:6:"atLine";i:173;}i:15;a:4:{s:6:"header";s:34:"private function moduleContent()	{";s:11:"parentClass";s:21:"tx_rss2import_module1";s:4:"cDat";a:3:{s:4:"text";s:30:"
+
+Generates the module content";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:6:"atLine";i:184;}i:17;a:7:{s:6:"header";s:38:"private function getAvailableFeeds() {";s:11:"parentClass";s:21:"tx_rss2import_module1";s:4:"cDat";a:3:{s:4:"text";s:78:"
+*******************************
+List Feeds
+********************************/
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";a:2:{i:0;s:507:"		global $LANG;
+
+		$content =
+      '<table>'.
+      '<tr>'.
+      '<td class="bgColor2">'.$LANG->getLL("feeds.edit").'</td>'.
+      '<td class="bgColor2">'.$LANG->getLL("feeds.title").'</td>'.
+      '<td class="bgColor2">'.$LANG->getLL("feeds.url").'</td>'.
+      '<td class="bgColor2">'.$LANG->getLL("feeds.update").'</td>'.
+      '</tr>';
+
+		$feeds = $this->helper->getFee
+[...]
+ude files?
+foreach($SOBE->include_once as $INC_FILE) {
+	include_once($INC_FILE);
+}
+
+$SOBE->main();
+$SOBE->printContent();
+
+?>";i:1;i:1;}s:12:"content_size";i:2319;s:13:"content_lines";i:56;s:6:"atLine";i:220;}}s:10:"usageCount";a:9:{s:12:"H_e708f16273";a:4:{s:3:"ALL";a:2:{s:12:"makeinstance";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_19aaeae789";a:3:{s:8:"fileName";s:14:"mod1/index.php";s:12:"makeinstance";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:18;s:15:"_functionHeader";s:50:"class tx_rss2import_module1 extends t3lib_SCbase {";}s:12:"H_15f7354a47";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_f613eb277b";a:3:{s:8:"fileName";s:41:"mod1/class.tx_rss2import_notification.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:31:"public function __construct() {";}s:12:"H_f557adf001";a:4:{s:3:"ALL";a:2:{s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_19aaeae789";a:3:{s:8:"fileName";s:14:"mod1/index.php";s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:30:"public function menuConfig()	{";}s:12:"H_9439a0424c";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_19aaeae789";a:3:{s:8:"fileName";s:14:"mod1/index.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:24:"public function main()	{";}s:12:"H_0a54405331";a:2:{s:24:"_searchtime_milliseconds";d:3;s:15:"_functionHeader";s:25:"function jumpToUrl(URL)	{";}s:12:"H_49dfa61e74";a:2:{s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:38:"function checkUncheckAll(theElement) {";}s:12:"H_5505282f3d";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_19aaeae789";a:3:{s:8:"fileName";s:14:"mod1/index.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:3;s:15:"_functionHeader";s:32:"public function printContent()	{";}s:12:"H_25ed4214d2";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_19aaeae789";a:3:{s:8:"fileName";s:14:"mod1/index.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:3;s:15:"_functionHeader";s:34:"private function moduleContent()	{";}s:12:"H_7a86c75f3c";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_19aaeae789";a:3:{s:8:"fileName";s:14:"mod1/index.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:4;s:15:"_functionHeader";s:38:"private function getAvailableFeeds() {";}}}s:14:"MD5_f1fb711138";a:5:{s:8:"filename";s:40:"scheduler/class.tx_rss2import_import.php";s:8:"filesize";i:477;s:6:"header";N;s:3:"DAT";a:2:{i:1;a:4:{s:6:"header";s:54:"class tx_rss2import_import extends tx_scheduler_Task {";s:5:"class";i:1;s:11:"parentClass";s:20:"tx_rss2import_import";s:6:"atLine";i:3;}i:3;a:6:{s:6:"header";s:27:"public function execute() {";s:11:"parentClass";s:20:"tx_rss2import_import";s:7:"content";a:2:{i:0;s:202:"
+		$helper = new tx_rss2import_helper();
+
+		$feeds = $helper->getFeeds();
+		foreach($feeds as $feed) {
+			$uids[] = $feed['uid'];
+		}
+
+		$res = $helper->importFeeds($uids,true);
+
+		return true;
+	}
+
+}
+?>";i:1;i:0;}s:12:"content_size";i:202;s:13:"content_lines";i:14;s:6:"atLine";i:5;}}s:10:"usageCount";a:2:{s:12:"H_2d8a54b5e6";a:2:{s:24:"_searchtime_milliseconds";d:20;s:15:"_functionHeader";s:54:"class tx_rss2import_import extends tx_scheduler_Task {";}s:12:"H_4440423aa1";a:2:{s:24:"_searchtime_milliseconds";d:2;s:15:"_functionHeader";s:27:"public function execute() {";}}}}}

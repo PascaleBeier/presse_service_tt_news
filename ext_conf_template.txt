@@ -1,0 +1,18 @@
+
+  # cat=basic; type=int; label=Uid of page where RSS import module will store RSS feed records.
+page_for_feeds = 
+
+  # cat=basic; type=string; label=Fields in tt_news record to check for changes in, when editing a tt_news.
+edited_fields = title,bodytext,subheader,author,author_email,ext_url,links
+
+  # cat=basic; type=int; label=The maximum width of the resized imported images
+image_max_width = 200
+
+  # cat=basic; type=int; label=The maximum height of the resized imported images
+image_max_height = 200
+
+  # cat=basic/enable; type=boolean; label=Enable gabriel support (if gabriel is installed)
+enable_gabriel = 0
+
+  # cat=basic; type=string; label=RSS2 formatters to include. 
+formatters = user_AU_Buildings
