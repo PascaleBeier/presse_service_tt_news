@@ -8,9 +8,9 @@
  ******************************************************************************************************************/
 
 require_once t3lib_extMgm::extPath('rss2_import') . 'class.tx_rss2import_rssparser.php';
-require_once PATH_t3lib.'class.t3lib_tsparser.php';
-require_once PATH_site.'typo3/sysext/cms/tslib/class.tslib_content.php';
-require_once PATH_t3lib."class.t3lib_tcemain.php";
+require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/TypoScript/Parser/TypoScriptParser.php';
+//require_once PATH_site.'typo3/sysext/cms/tslib/class.tslib_content.php';
+//require_once PATH_t3lib."class.t3lib_tcemain.php";
 if (!is_object($GLOBALS['LANG'])) {
 	require_once t3lib_extMgm::extPath('lang').'lang.php';
 	$GLOBALS['LANG'] = t3lib_div::makeInstance('language');
