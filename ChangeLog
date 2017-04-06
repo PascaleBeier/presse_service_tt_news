@@ -1,3 +1,7 @@
+2016-04-06 Pascale Beier <mail@pascalebeier.de>
+    * TYPO3 6 Compat
+    * Backend Skin
+
 2010-06-05 Kasper Ligaard <kasper@science.au.dk>
 	* Tentative Scheduler integration (no error checking or handling). Thanks to Oliver Dietsch.
 	* Use t3lib_div::getURL() in tx_rss2import_RSSParser->parse. Should allow for importing RSS-feeds through proxies. Thanks to Lorenz Kiefner  
