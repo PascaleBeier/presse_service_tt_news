@@ -2,7 +2,6 @@
 
 // DO NOT REMOVE OR CHANGE THESE 3 LINES:
 $MCONF["name"]="tools_txrss2importM1";
-$MCONF["access"]="user,group";
 $MCONF["script"]="_DISPATCH";
 
 $MLANG["default"]["tabs_images"]["tab"] = "moduleicon.gif";

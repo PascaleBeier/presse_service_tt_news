@@ -8,6 +8,8 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Lang\LanguageService;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Backend\Module\BaseScriptClass;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Backend\Template\DocumentTemplate;
 
 global $_EXTKEY, $MCONF;
 
@@ -24,7 +26,9 @@ $backendUserAuthentication->modAccess($MCONF, 1);
 require_once ExtensionManagementUtility::extPath($_EXTKEY) . 'mod1/class.tx_rss2import_helper.php';
 require_once ExtensionManagementUtility::extPath($_EXTKEY) . 'class.tx_rss2import_rssparser.php';
 
-
+/**
+ * Class tx_rss2import_module1
+ */
 class tx_rss2import_module1 extends BaseScriptClass
 {
     /**
@@ -42,23 +46,28 @@ class tx_rss2import_module1 extends BaseScriptClass
     protected $backendUserAuthentication;
     /** @var tx_rss2import_helper */
     protected $tx_rss2import_helper;
+    /** @var DocumentTemplate */
+    protected $documentTemplate;
 
-    public function __construct(LanguageService $languageService, BackendUserAuthentication $backendUserAuthentication,
-        tx_rss2import_helper $tx_rss2import_helper)
+    /**
+     * tx_rss2import_module1 constructor.
+     */
+    public function __construct()
     {
-        $this->languageService = $languageService;
-        $this->backendUserAuthentication = $backendUserAuthentication;
-        $this->tx_rss2import_helper = $tx_rss2import_helper;
-
-        global $_EXTKEY;
+        // Dependency Injection
+        $this->languageService = GeneralUtility::makeInstance(LanguageService::class);
+        $this->backendUserAuthentication = GeneralUtility::makeInstance(BackendUserAuthentication::class);
+        $this->tx_rss2import_helper = GeneralUtility::makeInstance(tx_rss2import_helper::class);
+        $this->documentTemplate = GeneralUtility::makeInstance(DocumentTemplate::class);
 
         parent::init();
 
+        global $_EXTKEY;
         $this->page_for_feeds = intval($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$_EXTKEY]['page_for_feeds']);
         $this->image_max_width = intval($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$_EXTKEY]['image_max_width']);
         $this->image_max_height = intval($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$_EXTKEY]['image_max_height']);
 
-        self::$extensionPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY);
+        self::$extensionPath = ExtensionManagementUtility::extRelPath($_EXTKEY);
     }
 
     /**
@@ -83,84 +92,74 @@ class tx_rss2import_module1 extends BaseScriptClass
      */
     public function main()
     {
-        global $BE_USER, $BACK_PATH;
+        global $BACK_PATH;
 
-        if (true) {
+        $this->documentTemplate->backPath = $BACK_PATH;
+        $this->documentTemplate->form = '<form action="" method="POST">';
 
-            // Draw the header.
-            $this->doc = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("bigDoc");
-            $this->doc->backPath = $BACK_PATH;
-            $this->doc->form = '<form action="" method="POST">';
+        // JavaScript
+        $this->documentTemplate->JScode =
+            '<script>
+                script_ended = 0;
+                function jumpToUrl(URL)	{
+                    document.location = URL;
+                }
 
-            // JavaScript
-            $this->doc->JScode =
-                '<script>
-                    script_ended = 0;
-                    function jumpToUrl(URL)	{
-                        document.location = URL;
-                    }
-    
-                    function checkUncheckAll(theElement) {
-                          var theForm = theElement.form, z = 0;
-                          for(i=0;i<theForm.length;i++) {
-                            if(theForm[i].type == \'checkbox\' && theForm[i].name != \'checkall\') {
-                              theForm[i].checked = theElement.checked;
-                            }
-                          }
+                function checkUncheckAll(theElement) {
+                      var theForm = theElement.form, z = 0;
+                      for(i=0;i<theForm.length;i++) {
+                        if(theForm[i].type == \'checkbox\' && theForm[i].name != \'checkall\') {
+                          theForm[i].checked = theElement.checked;
                         }
-                </script>';
-            $this->doc->JScode .= '<link rel="stylesheet" type="text/css" href="' .
-                self::$extensionPath . 'mod1/rss2import-be.css" />';
+                      }
+                    }
+            </script>';
 
-            $this->doc->postCode =
-                '<script>
-                    script_ended = 1;
-                    if (top.fsMod) top.fsMod.recentIds["web"] = ' . intval($this->id) . ';
-                </script>';
+        $this->documentTemplate->postCode =
+            '<script>
+                script_ended = 1;
+                if (top.fsMod) top.fsMod.recentIds["web"] = ' . intval($this->id) . ';
+            </script>';
 
-            $headerSection = $this->doc->getHeader(
-                "pages",
-                $this->pageinfo,
-                $this->pageinfo["_thePath"]) . "<br>" . $this->languageService->sL("LLL:EXT:lang/locallang_core.php:labels.path") . ": " . \TYPO3\CMS\Core\Utility\GeneralUtility::fixed_lgd_cs($this->pageinfo["_thePath"],
-                50
-            );
+        $headerSection = $this->documentTemplate->getHeader(
+            "pages",
+            $this->pageinfo,
+            $this->pageinfo["_thePath"]) . "<br>" . $this->languageService->sL("LLL:EXT:lang/locallang_core.php:labels.path") . ": " . \TYPO3\CMS\Core\Utility\GeneralUtility::fixed_lgd_cs($this->pageinfo["_thePath"],
+            50
+        );
 
-            $this->content .= $this->doc->startPage($this->languageService->getLL("title"));
-            $this->content .= $this->doc->header($this->languageService->getLL("title"));
-            $this->content .= $this->doc->spacer(5);
-            $this->content .= $this->doc->section("", $this->doc->funcMenu($headerSection,
-                \TYPO3\CMS\Backend\Utility\BackendUtility::getFuncMenu($this->id, "SET[function]", $this->MOD_SETTINGS["function"],
-                    $this->MOD_MENU["function"])));
-            $this->content .= $this->doc->divider(5);
+        $this->content .= $this->documentTemplate->startPage($this->languageService->getLL("title"));
+        $this->content .= $this->documentTemplate->header($this->languageService->getLL("title"));
+        $this->content .= $this->documentTemplate->spacer(5);
 
-            // Render content:
-            $this->moduleContent();
+        $this->content .= $this->documentTemplate->section(
+            "",
+            $this->documentTemplate->funcMenu(
+                $headerSection,
+                \TYPO3\CMS\Backend\Utility\BackendUtility::getFuncMenu(
+                    $this->id, "SET[function]",
+                    $this->MOD_SETTINGS["function"],
+                    $this->MOD_MENU["function"]
+                )
+            )
+        );
+        $this->content .= $this->documentTemplate->divider(5);
 
-            // ShortCut
-            if ($this->backendUserAuthentication->mayMakeShortcut()) {
-                $this->content .= $this->doc->spacer(20) . $this->doc->section("",
-                        $this->doc->makeShortcutIcon("id", implode(",", array_keys($this->MOD_MENU)),
-                            $this->MCONF["name"]));
-            }
+        // Render content:
+        $this->moduleContent();
 
-            $this->content .= $this->doc->spacer(10);
-        } else {
-            // If no access or if ID == zero
-
-            $this->doc = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("mediumDoc");
-            $this->doc->backPath = $BACK_PATH;
-
-            $this->content .= $this->doc->startPage($this->languageService->getLL("title"));
-            $this->content .= $this->doc->header($this->languageService->getLL("title"));
-            $this->content .= $this->doc->spacer(5);
-            $this->content .= $this->doc->spacer(10);
+        // ShortCut
+        if ($this->backendUserAuthentication->mayMakeShortcut()) {
+            $this->content .= $this->documentTemplate->spacer(20) . $this->documentTemplate->section("",
+                    $this->documentTemplate->makeShortcutIcon("id", implode(",", array_keys($this->MOD_MENU)),
+                        $this->MCONF["name"]));
         }
+
+        $this->content .= $this->documentTemplate->spacer(10);
     }
 
     /**
-     * Generates the module content
-     *
-     * @return    [type]        ...
+     * Generates the module content.
      */
     public function moduleContent()
     {
@@ -183,19 +182,19 @@ class tx_rss2import_module1 extends BaseScriptClass
                         '<td class="bgColor2">' . $this->languageService->getLL("feeds.status") . '</td>' .
                         '</tr>';
 
-                    $content .= $this->tx_rss2import_helper->importFeeds($feedsToImport, 0, $this->doc);
-                    $content .= $this->doc->t3Button('this.form.submit()', $this->languageService->getLL('back_label'));
+                    $content .= $this->tx_rss2import_helper->importFeeds($feedsToImport, 0, $this->documentTemplate);
+                    $content .= $this->documentTemplate->t3Button('this.form.submit()', $this->languageService->getLL('back_label'));
                 }
 
-                $this->content .= $this->doc->section($GLOBALS['LANG']->getLL("function1") . ':', $content, 0, 1);
+                $this->content .= $this->documentTemplate->section($this->languageService->getLL("function1") . ':', $content, 0, 1);
                 break;
         }
     }
 
     /**
-     * List Feeds
+     * List available Feeds.
      *
-     * @return    [type]        ...
+     * @return string
      */
     private function getAvailableFeeds()
     {
@@ -232,10 +231,10 @@ class tx_rss2import_module1 extends BaseScriptClass
         $feeds = $this->tx_rss2import_helper->getFeeds();
         foreach ($feeds as $feed) {
 
-            $editIcon = '<img' . \TYPO3\CMS\Backend\Utility\IconUtility::skinImg($this->doc->backPath, 'gfx/edit2.gif',
+            $editIcon = '<img' . \TYPO3\CMS\Backend\Utility\IconUtility::skinImg($this->documentTemplate->backPath, 'gfx/edit2.gif',
                     '') . ' title="' . $GLOBALS['LANG']->getLL('editrecord') . '" border="0" alt="" style="vertical-align:middle;" />';
-            $editLink = '<a style="text-decoration: none;" href="#" onclick="' . htmlspecialchars(\TYPO3\CMS\Backend\Utility\BackendUtility::editOnClick('&edit[tx_rss2import_feeds][' . $feed['uid'] . ']=edit',
-                    $this->doc->backPath)) . '">' . $editIcon . '</a>';
+            $editLink = '<a style="text-decoration: none;" href="#" onclick="' . htmlspecialchars(BackendUtility::editOnClick('&edit[tx_rss2import_feeds][' . $feed['uid'] . ']=edit',
+                    $this->documentTemplate->backPath)) . '">' . $editIcon . '</a>';
 
             $content .=
                 '<tr class="t3-row">' .
@@ -246,41 +245,46 @@ class tx_rss2import_module1 extends BaseScriptClass
                 '</tr>';
 
         }
-        $newIcon = '<img' . \TYPO3\CMS\Backend\Utility\IconUtility::skinImg($this->doc->backPath, 'gfx/new_el.gif',
-                '') . ' title="' . $GLOBALS['LANG']->getLL('newrecord') . '" border="0" alt="" style="vertical-align:middle;" />';
-        $newLink = '<a style="text-decoration: none;" href="#" onclick="' . htmlspecialchars(\TYPO3\CMS\Backend\Utility\BackendUtility::editOnClick('&edit[tx_rss2import_feeds][' . $this->page_for_feeds . ']=new',
-                $this->doc->backPath)) . '">' . $newIcon . '</a>';
+
+        $newIcon = '<img' . \TYPO3\CMS\Backend\Utility\IconUtility::skinImg(
+                $this->documentTemplate->backPath,
+                'gfx/new_el.gif',
+                ''
+                ) . ' title="' . $this->languageService->getLL('newrecord') . '" border="0" alt="" style="vertical-align:middle;" />';
+
+
+        $newLink = '<a style="text-decoration: none;" href="#" onclick="' . htmlspecialchars(BackendUtility::editOnClick('&edit[tx_rss2import_feeds][' . $this->page_for_feeds . ']=new',
+                $this->documentTemplate->backPath)) . '">' . $newIcon . '</a>';
 
         $content .=
             '<tr><td align="center">' . ($this->page_for_feeds ? $newLink : '') . '</td><td colspan="2"></td><td align="center"><a title="' . $this->languageService->getLL('select_all_label') . '"><input type="checkbox" name="checkall" onclick="checkUncheckAll(this);" /></a></td></tr>' .
             '</tbody></table>';
 
-        $content .=
-            $this->doc->t3Button('this.form.submit()', $this->languageService->getLL('submit_label'));
+        $content .= $this->documentTemplate->t3Button('this.form.submit()', $this->languageService->getLL('submit_label'));
 
         return $content;
     }
 
     /**
-     * Prints out the module HTML
+     * Print Module Html
      *
-     * @return    string        The contents
+     * @return void
      */
     public function printContent()
     {
+        $this->content .= $this->documentTemplate->endPage();
 
-        $this->content .= $this->doc->endPage();
         echo $this->content;
     }
 }
 
-if (defined("TYPO3_MODE") && isset($TYPO3_CONF_VARS[TYPO3_MODE]["XCLASS"]["ext/rss2_import/mod1/index.php"])) {
+if (defined("TYPO3_MODE") && isset($TYPO3_CONF_VARS[TYPO3_MODE]["XCLASS"]["ext/$_EXTKEY/mod1/index.php"])) {
     include_once($TYPO3_CONF_VARS[TYPO3_MODE]["XCLASS"]["ext/rss2_import/mod1/index.php"]);
 }
 
 
 // Make instance of Script Object Back-End (SOBE):
-$SOBE = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance("tx_rss2import_module1");
+$SOBE = GeneralUtility::makeInstance(tx_rss2import_module1::class);
 
 // Include files?
 foreach ($SOBE->include_once as $INC_FILE) {
