@@ -1,7 +1,7 @@
 <?php
-error_reporting(E_ALL | E_STRICT);
-// When running in strict mode, timezone must be set.
-date_default_timezone_set("Europe/Copenhagen");
+
+!date_default_timezone_get() ? date_default_timezone_set('Europe/Berlin') : null;
+
 require "utf8.inc";
 
 class AU_Vcal_To_RSS2 {

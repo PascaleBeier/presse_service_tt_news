@@ -1,14 +1,18 @@
 <?php
-require_once t3lib_extMgm::extPath('rss2_import').'mod1/class.tx_rss2import_helper.php';
-require_once t3lib_extMgm::extPath('rss2_import').'class.tx_rss2import_rssparser.php';
 
-class tx_rss2import_import extends tx_scheduler_Task {
+global $_EXTKEY;
+
+require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY).'mod1/class.tx_rss2import_helper.php';
+require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY).'class.tx_rss2import_rssparser.php';
+
+class tx_rss2import_import extends \TYPO3\CMS\Extbase\Scheduler\Task {
 	
 	public function execute() {
 		
-		$helper = new tx_rss2import_helper();		
-	
+		$helper = new tx_rss2import_helper();
+
 		$feeds = $helper->getFeeds();
+        $uids = [];
 		foreach($feeds as $feed) {
 			$uids[] = $feed['uid'];
 		}
@@ -19,4 +23,3 @@ class tx_rss2import_import extends tx_scheduler_Task {
 	}
 	
 }
-?>

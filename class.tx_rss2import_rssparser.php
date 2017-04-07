@@ -75,7 +75,7 @@ class tx_rss2import_RSSParser{
 	 * @return	[type]		...
 	 */
 	public function parse($url) {
-		$xml = t3lib_div::getURL($url);
+		$xml = \TYPO3\CMS\Core\Utility\GeneralUtility::getURL($url);
 		$status = xml_parse($this->xml_parser, $xml);
 		if (!$status) {
 			$this->errors[] = 'XML error: ' . xml_error_string(xml_get_error_code($this->xml_parser)) . ' at line ' . xml_get_current_line_number($this->xml_parser);

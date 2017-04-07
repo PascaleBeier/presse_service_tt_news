@@ -11,12 +11,12 @@ foreach($initVars as $var) {
 }
 
 //Check if gabriel needs to be aware of us
-if(t3lib_extMgm::isLoaded('gabriel')) {
+if(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('gabriel')) {
   $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['gabriel']['include'][$_EXTKEY] = 'mod1/class.tx_rss2import_notification.php';
 }
 
 //Check if scheduler is available
-if (t3lib_extMgm::isLoaded('scheduler')) {
+if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('scheduler')) {
 	/*
 	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['tx_rss2import_import'] = array(
 		'extension'        => $_EXTKEY,

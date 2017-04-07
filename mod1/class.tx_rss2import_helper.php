@@ -7,16 +7,15 @@
  *Description: A helper class containing the basic functionality of the RSS2 importer.
  ******************************************************************************************************************/
 
-require_once t3lib_extMgm::extPath('rss2_import') . 'class.tx_rss2import_rssparser.php';
+require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'class.tx_rss2import_rssparser.php';
 require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('core') . 'Classes/TypoScript/Parser/TypoScriptParser.php';
-//require_once PATH_site.'typo3/sysext/cms/tslib/class.tslib_content.php';
-//require_once PATH_t3lib."class.t3lib_tcemain.php";
+
 if (!is_object($GLOBALS['LANG'])) {
-	require_once t3lib_extMgm::extPath('lang').'lang.php';
-	$GLOBALS['LANG'] = t3lib_div::makeInstance('language');
+	require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('lang').'lang.php';
+	$GLOBALS['LANG'] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('language');
 	$GLOBALS['LANG']->init('default');
 }
-$GLOBALS['LANG']->includeLLFile("EXT:rss2_import/mod1/locallang.xml");
+$GLOBALS['LANG']->includeLLFile('EXT:'.$_EXTKEY.'/mod1/locallang.xml');
 
 /*
  * Define constants that match the values in 'type' column in the tt_news table schema.
@@ -48,16 +47,16 @@ class tx_rss2import_helper {
 	 * @param	boolean		$outputPlainText: Output either plaintext or HTML
 	 * @return	string		Statistics data of the import (HTML or plaintext)
 	 */
-	public function importFeeds(array $feedsToGet, $outputPlainText = true) {
+	public function importFeeds(array $feedsToGet, $outputPlainText = true, $args = null) {
 		global $LANG;
 		$content = '';
-		$this->cObj = t3lib_div::makeInstance('tslib_cObj');
+		$this->cObj = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tslib_cObj');
 		$this->maxTitleLength = 40;
 
 		// Load the formatter classes. These are set in the Extension Manager and resides in
 		// the directory EXT:rss2_import/formatters/
-		$formatters = t3lib_div::trimExplode(',', $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rss2_import']['formatters'], true);
-		$extPath = t3lib_extMgm::extPath('rss2_import');
+		$formatters = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rss2_import']['formatters'], true);
+		$extPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('rss2_import');
 		foreach ($formatters as $key => $fileName) {
 			$filePath = $extPath . 'formatters' . DIRECTORY_SEPARATOR . $fileName . '.php';
 			if (file_exists($filePath)) {
@@ -117,7 +116,7 @@ class tx_rss2import_helper {
 						if(is_array($extraMappingNS)) {
 							foreach($extraMappingNS as $extraMapping) {
 								if(is_string($extraMapping)) {
-									foreach (t3lib_div::trimExplode(',', $extraMapping, true) as $extraField) {
+									foreach (\TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $extraMapping, true) as $extraField) {
 										if (!isset($fields[$extraField])) {
 											$missingFields .= $extraField.', ';
 										}
@@ -134,10 +133,11 @@ class tx_rss2import_helper {
 					$extraMappings = Array();
 				}
 
-				//Insert or update items.
-				if (is_array($rss['items'])) {
+                $statistics = [];
+                //Insert or update items.
+                if (is_array($rss['items'])) {
 					if (count($rss['items']) === 0) {
-						t3lib_div::devLog('The feed titled "' . $feed['title'] . '" returned no items.', 'rss2_import', 1);
+						\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('The feed titled "' . $feed['title'] . '" returned no items.', 'rss2_import', 1);
 					}
 					$statistics = array('inserted' => 0, 'updated' => 0, 'zerorowserror' => 0, 'severalrowserror' => 0);
 					foreach($rss['items'] as $item) {
@@ -158,11 +158,11 @@ class tx_rss2import_helper {
 							$status = $this->insertItem($item, $feed, $outputPlainText, $extraMappings);
 							$statistics['inserted']++;
 						} else if ($num_rows === false) {
-							t3lib_div::devLog('ERROR: There was an error when trying to fetch the number of rows.', 'RSS Import', 1);
+							\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('ERROR: There was an error when trying to fetch the number of rows.', 'RSS Import', 1);
 							$status = 'Error while fecthing number of rows.';
 							$statistics['zerorowserror']++;
 						} else {
-							t3lib_div::devLog('ERROR: More than one record with uid '.$uid.' found in tt_news table.', 'RSS Import', 1);
+							\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('ERROR: More than one record with uid '.$uid.' found in tt_news table.', 'RSS Import', 1);
 							$status = 'Error: More than one record with uid ' . $uid . ' found in tt_news table.';
 							$statistics['severalrowserror']++;
 						}
@@ -358,7 +358,7 @@ class tx_rss2import_helper {
 				break;
 			case INFO_TYPE_ARTICLE:
 			default:
-				t3lib_div::devLog('ERROR: Not valid news type','RSS Import', 1, array('Fieldvalues' => $field_values, 'Item' => $item, 'Type' => $type));
+				\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('ERROR: Not valid news type','RSS Import', 1, array('Fieldvalues' => $fields_values, 'Item' => $item, 'Type' => $type));
 				exit();
 				break;
 		}
@@ -376,7 +376,7 @@ class tx_rss2import_helper {
 						if (isset($item[$namespace][$entryName]['data']) ||
 							($namespace === 'xmlns' && isset($item[$entryName]))
 							) {
-							$realNames = t3lib_div::trimExplode(',', $fieldName, true);
+							$realNames = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $fieldName, true);
 							foreach ($realNames as $realName) {
 								if ($namespace === 'xmlns') {
 									$fields_values[$realName] = $item[$entryName];
@@ -386,7 +386,7 @@ class tx_rss2import_helper {
 							}
 						}
 					} else if (is_array($fieldName)) {
-						$realNames = t3lib_div::trimExplode(',', $extraMappingNS[substr($entryName,0,-1)], true);
+						$realNames = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $extraMappingNS[substr($entryName,0,-1)], true);
 						foreach ($realNames as $realName) {
 							// isevent is a reserved word used to integrate with an events extension like mbl_newsevent.
 							if ($entryName === 'isevent.') {
@@ -399,7 +399,7 @@ class tx_rss2import_helper {
 							$fields_values[$realName] = $this->cObj->stdWrap($fields_values[$realName], $fieldName);
 						}
 					} else {
-						t3lib_div::devLog('Not valid type for fieldName: ' . gettype($fieldName), 'rss2_import', 1, $extraMappingNS);
+						\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Not valid type for fieldName: ' . gettype($fieldName), 'rss2_import', 1, $extraMappingNS);
 					}
 				}
 			}
@@ -425,8 +425,8 @@ class tx_rss2import_helper {
 			'*',
 			'tx_rss2import_feeds',
 		$uidWhere .
-		t3lib_befunc::BEenableFields('tx_rss2import_feeds') .
-		t3lib_befunc::deleteClause('tx_rss2import_feeds')
+		\TYPO3\CMS\Backend\Utility\BackendUtility::BEenableFields('tx_rss2import_feeds') .
+		\TYPO3\CMS\Backend\Utility\BackendUtility::deleteClause('tx_rss2import_feeds')
 		);
 		$feeds = array();
 		while($feed = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
@@ -452,7 +452,7 @@ class tx_rss2import_helper {
 		} else if ($item['link']) {                               //uid from link
 			$result = 'link:' . $prefix . $item['link'];
 		} else {
-			t3lib::devLog('Unable to generate valid uid.','RSS Import', 1, array('item' => $item, 'feed' => $feed));
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devLog('Unable to generate valid uid.','RSS Import', 1, array('item' => $item, 'feed' => $feed));
 		}
 		return trim($result);
 	}
@@ -466,8 +466,8 @@ class tx_rss2import_helper {
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('uid',
                                                  'tx_rss2import_feeds',
                                                  'auto_update_gabriel=1' .
-		t3lib_befunc::BEenableFields('tx_rss2import_feeds') .
-		t3lib_befunc::deleteClause('tx_rss2import_feeds'));
+		\TYPO3\CMS\Backend\Utility\BackendUtility::BEenableFields('tx_rss2import_feeds') .
+		\TYPO3\CMS\Backend\Utility\BackendUtility::deleteClause('tx_rss2import_feeds'));
 		$uids = array();
 		while($feed = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 			$uids[] = $feed['uid'];
@@ -542,7 +542,7 @@ class tx_rss2import_helper {
 	 */
 	private function parseFeedTSConfig(array $feed) {
 		$tsString = $feed['typoscript_config'];
-		$TSparserObject = t3lib_div::makeInstance('t3lib_tsparser');
+		$TSparserObject = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('t3lib_tsparser');
 		$TSparserObject->parse($tsString);
 		return $TSparserObject->setup;
 	}
@@ -554,7 +554,7 @@ class tx_rss2import_helper {
 	 */
 	private function processDataMap (array $data) {
 		// The next few lines are described in Typo3 Core API, section "Using t3lib_TCEmain in scripts".
-		$tce = t3lib_div::makeInstance('t3lib_TCEmain');
+		$tce = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('t3lib_TCEmain');
 		$tce->stripslashes_values = 0;
 		$tce->dontProcessTransformations = 1;
 		$tce->start($data, array());
@@ -569,7 +569,7 @@ class tx_rss2import_helper {
 	 * @return string The filetype
 	 */
 	private function getFileType ($filename) {
-		$parts = explode('.', $item['media']['thumbnail']['attrs']['URL']);
+		$parts = explode('.', $filename['media']['thumbnail']['attrs']['URL']);
 		$type = end($parts);
 		$mime_types = array(
 
@@ -637,7 +637,6 @@ class tx_rss2import_helper {
 	}
 }
 
-if (defined("TYPO3_MODE") && isset($TYPO3_CONF_VARS[TYPO3_MODE]["XCLASS"]["ext/rss2_import/mod1/class.tx_rss2import_helper.php"])) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]["XCLASS"]["ext/rss2_import/mod1/class.tx_rss2import_helper.php"]);
+if (defined("TYPO3_MODE") && isset($TYPO3_CONF_VARS[TYPO3_MODE]["XCLASS"]["ext/$EXTKEY/mod1/class.tx_rss2import_helper.php"])) {
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]["XCLASS"]["ext/$EXTKEY/mod1/class.tx_rss2import_helper.php"]);
 }
-?>

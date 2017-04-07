@@ -22,7 +22,8 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once t3lib_extMgm::extPath('rss2_import') . 'mod1/class.tx_rss2import_helper.php';
+require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'mod1/class.tx_rss2import_helper.php';
+
 /**
  * Class "tx_rss2import_scheduler" provides (..?)
  *
@@ -31,7 +32,7 @@ require_once t3lib_extMgm::extPath('rss2_import') . 'mod1/class.tx_rss2import_he
  * @subpackage	rss2_import
  *
  */
-class tx_rss2import_scheduler extends tx_scheduler_Task {
+class tx_rss2import_scheduler extends \TYPO3\CMS\Extbase\Scheduler\Task {
 
 	/**
 	 * uid of the feed Record
@@ -43,16 +44,13 @@ class tx_rss2import_scheduler extends tx_scheduler_Task {
 	/**
 	 * Function executed from the Scheduler.
 	 *
-	 * @return	void
+	 * @return bool
 	 */
 	public function execute() {
 		$helper = new tx_rss2import_helper();
 		$result = $helper->importFeeds(array($this->feed), TRUE);
-		if (strpos($result, 'Zero rows error: 0') && strpos($result, 'Several rows error: 0')) {
-			return true;
-		} else {
-			return false;
-		}
+
+		return strpos($result, 'Zero rows error: 0') && strpos($result, 'Several rows error: 0');
 	}
 
 	/**
@@ -61,7 +59,7 @@ class tx_rss2import_scheduler extends tx_scheduler_Task {
 	 * @return	string	Information to display
 	 */
 	public function getAdditionalInformation() {
-		return $GLOBALS['LANG']->sL('LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_scheduler.record1') . ': ' . $this->feed;
+		return $GLOBALS['LANG']->sL('LLL:EXT:'.$_EXTKEY.'/locallang_db.xml:tx_rss2import_scheduler.record1') . ': ' . $this->feed;
 	}
 }
 

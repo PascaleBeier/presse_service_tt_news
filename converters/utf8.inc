@@ -58,8 +58,8 @@ class UnicodeAndUTF8StringConversion {
 	 *
 	 * Returns false if the input string isn't a valid UTF-8 octet sequence.
 	 *
-	 * @param	[type]		$$str: ...
-	 * @return	[type]		...
+	 * @param $str string
+	 * @return mixed|bool
 	 */
 	public static function utf8ToUnicode(&$str) {
 		$mState = 0;     // cached expected number of octets after the current octet

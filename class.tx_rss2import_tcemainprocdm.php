@@ -40,10 +40,10 @@ class tx_rss2import_tcemainprocdm {
 		
 		// If update of tt_news record, mark it as edited, unless RSS2 Import is not the one doing the update.
 		if($table === 'tt_news' && $status === 'update') {
-			$oldData = t3lib_befunc::getRecord('tt_news', $id);
+			$oldData = \TYPO3\CMS\Backend\Utility\BackendUtility::getRecord('tt_news', $id);
 
 			// Get list of fields to check for modification. These are set in the Extension Manager.
-			$compare = t3lib_div::trimExplode(',', $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rss2_import']['edited_fields']);
+			$compare = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rss2_import']['edited_fields']);
 
 			foreach($compare as $field) {
 				if (isset($fieldArray[$field]) && $fieldArray[$field] !== $oldData[$field]) {
@@ -52,7 +52,7 @@ class tx_rss2import_tcemainprocdm {
 					$data[$table][$id]['tx_rss2import_edited'] = 1;
 
 					// The next few lines are described in Typo3 Core API, section "Using t3lib_TCEmain in scripts".
-					$tce = t3lib_div::makeInstance('t3lib_TCEmain');
+					$tce = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('t3lib_TCEmain');
 					$tce->stripslashes_values = 0;
 					$tce->start($data, array());
 					$tce->process_datamap();
