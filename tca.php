@@ -2,6 +2,8 @@
 
 defined('TYPO3_MODE') || die ('Access denied.');
 
+global $TCA;
+
 $TCA['tx_rss2import_feeds'] = Array(
     'ctrl' => $TCA['tx_rss2import_feeds']['ctrl'],
     'interface' => Array(
@@ -47,7 +49,7 @@ $TCA['tx_rss2import_feeds'] = Array(
         ),
         'title' => Array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:' . $_EXTKEY . '/locallang_db.xml:tx_rss2import_feeds.title',
+            'label' => 'LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_feeds.title',
             'config' => Array(
                 'type' => 'input',
                 'size' => '45',
@@ -56,7 +58,7 @@ $TCA['tx_rss2import_feeds'] = Array(
         ),
         'url' => Array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:' . $_EXTKEY . '/locallang_db.xml:tx_rss2import_feeds.url',
+            'label' => 'LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_feeds.url',
             'config' => Array(
                 'type' => 'input',
                 'size' => '45',
@@ -77,7 +79,7 @@ $TCA['tx_rss2import_feeds'] = Array(
         ),
         'errors' => Array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:' . $_EXTKEY . '/locallang_db.xml:tx_rss2import_feeds.errors',
+            'label' => 'LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_feeds.errors',
             'config' => Array(
                 'type' => 'text',
                 'cols' => '30',
@@ -86,7 +88,7 @@ $TCA['tx_rss2import_feeds'] = Array(
         ),
         'errors_count' => Array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:' . $_EXTKEY . '/locallang_db.xml:tx_rss2import_feeds.errors_count',
+            'label' => 'LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_feeds.errors_count',
             'config' => Array(
                 'type' => 'input',
                 'size' => '4',
@@ -102,7 +104,7 @@ $TCA['tx_rss2import_feeds'] = Array(
         ),
         'target' => Array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:' . $_EXTKEY . '/locallang_db.xml:tx_rss2import_feeds.target',
+            'label' => 'LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_feeds.target',
             'config' => Array(
                 'type' => 'group',
                 'internal_type' => 'db',
@@ -119,7 +121,7 @@ $TCA['tx_rss2import_feeds'] = Array(
         ),
         'override_edited' => Array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:' . $_EXTKEY . '/locallang_db.xml:tx_rss2import_feeds.override_edited',
+            'label' => 'LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_feeds.override_edited',
             'config' => Array(
                 'type' => 'check',
                 'default' => '0'
@@ -127,7 +129,7 @@ $TCA['tx_rss2import_feeds'] = Array(
         ),
         'import_images' => Array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:' . $_EXTKEY . '/locallang_db.xml:tx_rss2import_feeds.import_images',
+            'label' => 'LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_feeds.import_images',
             'config' => Array(
                 'type' => 'check',
                 'default' => '1'
@@ -135,7 +137,7 @@ $TCA['tx_rss2import_feeds'] = Array(
         ),
         'auto_update_gabriel' => Array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:' . $_EXTKEY . '/locallang_db.xml:tx_rss2import_feeds.auto_update_gabriel',
+            'label' => 'LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_feeds.auto_update_gabriel',
             'config' => Array(
                 'type' => 'check',
                 'default' => '0'
@@ -143,7 +145,7 @@ $TCA['tx_rss2import_feeds'] = Array(
         ),
         'guid_prefix' => Array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:' . $_EXTKEY . '/locallang_db.xml:tx_rss2import_feeds.guid_prefix',
+            'label' => 'LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_feeds.guid_prefix',
             'config' => Array(
                 'type' => 'input',
                 'size' => '40',
@@ -151,7 +153,7 @@ $TCA['tx_rss2import_feeds'] = Array(
         ),
         'typoscript_config' => Array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:' . $_EXTKEY . '/locallang_db.xml:tx_rss2import_feeds.typoscript_config',
+            'label' => 'LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_feeds.typoscript_config',
             'config' => Array(
                 'type' => 'text',
                 'cols' => '55',
@@ -160,7 +162,7 @@ $TCA['tx_rss2import_feeds'] = Array(
         ),
         'default_hidden' => Array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:' . $_EXTKEY . '/locallang_db.xml:tx_rss2import_feeds.default_hidden',
+            'label' => 'LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_feeds.default_hidden',
             'config' => Array(
                 'type' => 'check',
                 'default' => '0'
@@ -168,12 +170,11 @@ $TCA['tx_rss2import_feeds'] = Array(
         ),
         'default_type' => Array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:' . $_EXTKEY . '/locallang_db.xml:tx_rss2import_feeds.default_type',
+            'label' => 'LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_feeds.default_type',
             'config' => Array(
                 'type' => 'select',
                 'items' => Array(
                     Array('LLL:EXT:tt_news/locallang_tca.php:tt_news.type.I.0', 0),
-                    // Array('LLL:EXT:tt_news/locallang_tca.php:tt_news.type.I.1', 1),
                     Array('LLL:EXT:tt_news/locallang_tca.php:tt_news.type.I.2', 2),
                     Array('LLL:EXT:au_tsconfig/locallang.xml:tt_news.type.event', 4)
                 ),
@@ -183,7 +184,7 @@ $TCA['tx_rss2import_feeds'] = Array(
         'default_categories' => Array(
             'exclude' => 1,
             // 'l10n_mode' => 'exclude', // the localizalion mode will be handled by the userfunction
-            'label' => 'LLL:EXT:' . $_EXTKEY . '/locallang_db.xml:tx_rss2import_feeds.default_category',
+            'label' => 'LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_feeds.default_category',
             'config' => Array(
                 'type' => 'select',
                 'form_type' => 'user',
@@ -201,7 +202,7 @@ $TCA['tx_rss2import_feeds'] = Array(
         ),
         'default_author' => Array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:' . $_EXTKEY . '/locallang_db.xml:tx_rss2import_feeds.default_author',
+            'label' => 'LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_feeds.default_author',
             'config' => Array(
                 'type' => 'input',
                 'size' => '28'
@@ -209,7 +210,7 @@ $TCA['tx_rss2import_feeds'] = Array(
         ),
         'default_authoremail' => Array(
             'exclude' => 1,
-            'label' => 'LLL:EXT:' . $_EXTKEY . '/locallang_db.xml:tx_rss2import_feeds.default_authoremail',
+            'label' => 'LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_feeds.default_authoremail',
             'config' => Array(
                 'type' => 'input',
                 'size' => '15'

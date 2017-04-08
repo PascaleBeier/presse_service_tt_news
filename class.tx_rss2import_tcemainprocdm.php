@@ -66,5 +66,3 @@ class tx_rss2import_tcemainprocdm {
 if (defined("TYPO3_MODE") && isset($TYPO3_CONF_VARS[TYPO3_MODE]["XCLASS"]["ext/rss2_import/class.tx_rss2import_tcemainprocdm.php"])) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]["XCLASS"]["ext/rss2_import/class.tx_rss2import_tcemainprocdm.php"]);
 }
-
-?>

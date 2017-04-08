@@ -307,6 +307,7 @@ class tx_rss2import_RSSParser{
 					break;
 				case "LASTBUILDDATE":
 					$this->cLastBuild .= $data;
+					break;
 				case "GENERATOR":
 					$this->cGenerator .= $data;
 					break;
@@ -454,4 +455,3 @@ class tx_rss2import_RSSParser{
 if (defined('TYPO3_MODE') && isset($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rss2_import/class.tx_rss2import_rssparser.php'])) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rss2_import/mod1/class.tx_rss2import_rssparser.php']);
 }
-?>

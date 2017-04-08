@@ -3,6 +3,8 @@
  * RSS Import Backend Module
  */
 
+defined("TYPO3_MODE") || die("Access Denied.");
+
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Lang\LanguageService;
@@ -15,16 +17,15 @@ global $_EXTKEY, $MCONF;
 
 // Include Language Files
 $languageService = GeneralUtility::makeInstance(LanguageService::class);
-$languageService->includeLLFile('EXT:' . $_EXTKEY . '/mod1/locallang.xml');
+$languageService->includeLLFile('EXT:rss2_import/mod1/locallang.xml');
 
 // Check for Backend User Permissions
 $backendUserAuthentication = GeneralUtility::makeInstance(BackendUserAuthentication::class);
 $backendUserAuthentication->modAccess($MCONF, 1);
 
 // Include Classes.
-// @todo probably obsolete
-require_once ExtensionManagementUtility::extPath($_EXTKEY) . 'mod1/class.tx_rss2import_helper.php';
-require_once ExtensionManagementUtility::extPath($_EXTKEY) . 'class.tx_rss2import_rssparser.php';
+require_once __DIR__.'/class.tx_rss2import_helper.php';
+require_once __DIR__.'/../class.tx_rss2import_rssparser.php';
 
 /**
  * Class tx_rss2import_module1
@@ -40,7 +41,7 @@ class tx_rss2import_module1 extends BaseScriptClass
     private $image_max_width;
     private $image_max_height;
 
-    /** @var \TYPO3\CMS\Lang\LanguageService */
+    /** @var LanguageService */
     protected $languageService;
     /** @var BackendUserAuthentication */
     protected $backendUserAuthentication;
@@ -62,12 +63,11 @@ class tx_rss2import_module1 extends BaseScriptClass
 
         parent::init();
 
-        global $_EXTKEY;
-        $this->page_for_feeds = intval($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$_EXTKEY]['page_for_feeds']);
-        $this->image_max_width = intval($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$_EXTKEY]['image_max_width']);
-        $this->image_max_height = intval($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$_EXTKEY]['image_max_height']);
+        $this->page_for_feeds = intval($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rss2_import']['page_for_feeds']);
+        $this->image_max_width = intval($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rss2_import']['image_max_width']);
+        $this->image_max_height = intval($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rss2_import']['image_max_height']);
 
-        self::$extensionPath = ExtensionManagementUtility::extRelPath($_EXTKEY);
+        self::$extensionPath = ExtensionManagementUtility::extRelPath('rss2_import');
     }
 
     /**
@@ -99,7 +99,9 @@ class tx_rss2import_module1 extends BaseScriptClass
 
         // JavaScript
         $this->documentTemplate->JScode =
-            '<script>
+
+
+            "<script>
                 script_ended = 0;
                 function jumpToUrl(URL)	{
                     document.location = URL;
@@ -107,19 +109,21 @@ class tx_rss2import_module1 extends BaseScriptClass
 
                 function checkUncheckAll(theElement) {
                       var theForm = theElement.form, z = 0;
-                      for(i=0;i<theForm.length;i++) {
-                        if(theForm[i].type == \'checkbox\' && theForm[i].name != \'checkall\') {
+                      for(var i = 0; i < theForm.length; i++) {
+                        if(theForm[i].type === 'checkbox' && theForm[i].name !== 'checkall') {
                           theForm[i].checked = theElement.checked;
                         }
                       }
                     }
-            </script>';
+            </script>";
+
+        $recentId = intval($this->id);
 
         $this->documentTemplate->postCode =
-            '<script>
+            "<script>
                 script_ended = 1;
-                if (top.fsMod) top.fsMod.recentIds["web"] = ' . intval($this->id) . ';
-            </script>';
+                if (top.fsMod) top.fsMod.recentIds['web'] = $recentId;
+            </script>";
 
         $headerSection = $this->documentTemplate->getHeader(
             "pages",
@@ -136,7 +140,7 @@ class tx_rss2import_module1 extends BaseScriptClass
             "",
             $this->documentTemplate->funcMenu(
                 $headerSection,
-                \TYPO3\CMS\Backend\Utility\BackendUtility::getFuncMenu(
+                BackendUtility::getFuncMenu(
                     $this->id, "SET[function]",
                     $this->MOD_SETTINGS["function"],
                     $this->MOD_MENU["function"]
@@ -166,7 +170,7 @@ class tx_rss2import_module1 extends BaseScriptClass
         switch ((string)$this->MOD_SETTINGS["function"]) {
             case 1:
 
-                $feedsToImport = \TYPO3\CMS\Core\Utility\GeneralUtility::_POST('import');
+                $feedsToImport = GeneralUtility::_POST('import');
 
                 if (empty($feedsToImport)) {
                     $content = $this->getAvailableFeeds();
@@ -174,12 +178,12 @@ class tx_rss2import_module1 extends BaseScriptClass
                     if (!is_array($feedsToImport)) {
                         $feedsToImport = array($feedsToImport);
                     }
-                    $content = '<table>' .
-                        '<tr>' .
-                        '<td class="bgColor2">' . $this->languageService->getLL("feeds.title") . '</td>' .
-                        '<td class="bgColor2">' . $this->languageService->getLL("feeds.errors_count") . '</td>' .
-                        '<td class="bgColor2">' . $this->languageService->getLL("feeds.errors") . '</td>' .
-                        '<td class="bgColor2">' . $this->languageService->getLL("feeds.status") . '</td>' .
+                    $content = $this->documentTemplate->table_TABLE.
+                        $this->documentTemplate->table_TR.
+                        '<td>' . $this->languageService->getLL("feeds.title") . '</td>' .
+                        '<td>' . $this->languageService->getLL("feeds.errors_count") . '</td>' .
+                        '<td>' . $this->languageService->getLL("feeds.errors") . '</td>' .
+                        '<td>' . $this->languageService->getLL("feeds.status") . '</td>' .
                         '</tr>';
 
                     $content .= $this->tx_rss2import_helper->importFeeds($feedsToImport, 0, $this->documentTemplate);
@@ -198,30 +202,20 @@ class tx_rss2import_module1 extends BaseScriptClass
      */
     private function getAvailableFeeds()
     {
-        $content =
-            '<div id="t3-generated-1">
-                <table class="t3-table" width="100%">
-                    <thead>
-                        <tr class="t3-row-header">
-                            <th class="t3-col-header t3-cell">
-                                <div class="t3-cell-inner">
+        $content = $this->documentTemplate->table_TABLE.
+                    '<thead>'
+                        .$this->documentTemplate->table_TR.
+                            '<th>
                                 ' . $this->languageService->getLL("feeds.edit") . '
-                                </div>
                             </th>
-                            <th class="t3-col-header">
-                                <div class="t3-cell-inner">
+                            <th>
                                 ' . $this->languageService->getLL("feeds.title") . '
-                                </div>
                             </th>
-                            <th class="t3-col-header">
-                                <div class="t3-cell-inner">
+                            <th>
                                 ' . $this->languageService->getLL("feeds.url") . '
-                                </div>
                             </th>
-                            <th class="t3-col-header">
-                                <div class="t3-cell-inner">
+                            <th>
                                 ' . $this->languageService->getLL("feeds.update") . '
-                                </div>
                             </th>
                         </tr>
                     </thead>
@@ -231,30 +225,33 @@ class tx_rss2import_module1 extends BaseScriptClass
         $feeds = $this->tx_rss2import_helper->getFeeds();
         foreach ($feeds as $feed) {
 
-            $editIcon = '<img' . \TYPO3\CMS\Backend\Utility\IconUtility::skinImg($this->documentTemplate->backPath, 'gfx/edit2.gif',
-                    '') . ' title="' . $GLOBALS['LANG']->getLL('editrecord') . '" border="0" alt="" style="vertical-align:middle;" />';
-            $editLink = '<a style="text-decoration: none;" href="#" onclick="' . htmlspecialchars(BackendUtility::editOnClick('&edit[tx_rss2import_feeds][' . $feed['uid'] . ']=edit',
-                    $this->documentTemplate->backPath)) . '">' . $editIcon . '</a>';
+            $editLinkOnClick = htmlspecialchars(
+                BackendUtility::editOnClick(
+                    '&edit[tx_rss2import_feeds][' . $feed['uid'] . ']=edit',
+                    $this->documentTemplate->backPath
+                )
+            );
+
+            $editLink = $this->documentTemplate->t3Button($editLinkOnClick, $this->languageService->getLL('editrecord'));
 
             $content .=
-                '<tr class="t3-row">' .
-                '<td class="t3-cell"><div class="t3-cell-inner">' . $editLink . '</div></td>' .
-                '<td class="t3-cell"><div class="t3-cell-inner">' . $feed['title'] . '</div></td>' .
-                '<td class="t3-cell"><div class="t3-cell-inner">' . $feed['url'] . '</div></td>' .
-                '<td class="t3-cell"><div class="t3-cell-inner"><input class="t3-form-checkbox t3-form-field" type="checkbox" name="import[]" value="' . $feed['uid'] . '" /></div></td>' .
+                $this->documentTemplate->table_TR.
+                '<td>' . $editLink . '</td>' .
+                '<td>' . $feed['title'] . '</td>' .
+                '<td>' . $feed['url'] . '</td>' .
+                '<td><input class="t3-form-checkbox t3-form-field" type="checkbox" name="import[]" value="' . $feed['uid'] . '" /></td>' .
                 '</tr>';
 
         }
 
-        $newIcon = '<img' . \TYPO3\CMS\Backend\Utility\IconUtility::skinImg(
-                $this->documentTemplate->backPath,
-                'gfx/new_el.gif',
-                ''
-                ) . ' title="' . $this->languageService->getLL('newrecord') . '" border="0" alt="" style="vertical-align:middle;" />';
+        $newLinkOnClick = htmlspecialchars(
+            BackendUtility::editOnClick(
+                '&edit[tx_rss2import_feeds][' . $this->page_for_feeds . ']=new',
+                $this->documentTemplate->backPath
+            )
+        );
 
-
-        $newLink = '<a style="text-decoration: none;" href="#" onclick="' . htmlspecialchars(BackendUtility::editOnClick('&edit[tx_rss2import_feeds][' . $this->page_for_feeds . ']=new',
-                $this->documentTemplate->backPath)) . '">' . $newIcon . '</a>';
+        $newLink = $this->documentTemplate->t3Button($newLinkOnClick, $this->languageService->getLL('newrecord'));
 
         $content .=
             '<tr><td align="center">' . ($this->page_for_feeds ? $newLink : '') . '</td><td colspan="2"></td><td align="center"><a title="' . $this->languageService->getLL('select_all_label') . '"><input type="checkbox" name="checkall" onclick="checkUncheckAll(this);" /></a></td></tr>' .
@@ -278,18 +275,12 @@ class tx_rss2import_module1 extends BaseScriptClass
     }
 }
 
-if (defined("TYPO3_MODE") && isset($TYPO3_CONF_VARS[TYPO3_MODE]["XCLASS"]["ext/$_EXTKEY/mod1/index.php"])) {
+if (isset($TYPO3_CONF_VARS[TYPO3_MODE]["XCLASS"]["ext/rss2_import/mod1/index.php"])) {
     include_once($TYPO3_CONF_VARS[TYPO3_MODE]["XCLASS"]["ext/rss2_import/mod1/index.php"]);
 }
 
 
 // Make instance of Script Object Back-End (SOBE):
 $SOBE = GeneralUtility::makeInstance(tx_rss2import_module1::class);
-
-// Include files?
-foreach ($SOBE->include_once as $INC_FILE) {
-    include_once($INC_FILE);
-}
-
 $SOBE->main();
 $SOBE->printContent();

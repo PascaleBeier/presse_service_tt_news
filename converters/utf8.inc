@@ -224,4 +224,3 @@ class UnicodeAndUTF8StringConversion {
 		return $utf8char;
 	}
 }
-?>

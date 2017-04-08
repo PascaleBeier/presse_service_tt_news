@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'mod1/class.tx_rss2import_helper.php';
+require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('rss2_import') . 'mod1/class.tx_rss2import_helper.php';
 
 /**
  * Class "tx_rss2import_scheduler" provides (..?)
@@ -59,11 +59,10 @@ class tx_rss2import_scheduler extends \TYPO3\CMS\Extbase\Scheduler\Task {
 	 * @return	string	Information to display
 	 */
 	public function getAdditionalInformation() {
-		return $GLOBALS['LANG']->sL('LLL:EXT:'.$_EXTKEY.'/locallang_db.xml:tx_rss2import_scheduler.record1') . ': ' . $this->feed;
+		return $GLOBALS['LANG']->sL('LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_scheduler.record1') . ': ' . $this->feed;
 	}
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rss2_import/class.tx_rss2import_scheduler.php'])	{
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/scheduler/rss2_import/class.tx_rss2import_scheduler.php']);
 }
-?>

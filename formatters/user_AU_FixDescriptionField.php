@@ -154,7 +154,7 @@ class user_AU_FixDescriptionField {
 
 	// Convert a string of the form 'hours:minutes:seconds' into seconds.
 	public function timeToSecondsSinceMidnight ($str) {
-		$parts = split(':', $str);
+		$parts = preg_split(':', $str);
 		$hours = intval($parts[0]);
 		$hours = $hours >= 0 ? $hours : 0;
 		$hours = $hours <= 23 ? $hours : 23;

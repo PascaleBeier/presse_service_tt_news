@@ -267,4 +267,3 @@ class AU_Vcal_To_RSS2 {
 	}
 }
 AU_Vcal_To_RSS2::convert($_GET['vcalurl']);
-?>

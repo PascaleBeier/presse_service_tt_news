@@ -1,56 +1,40 @@
 <?php
-/***************************************************************
- *  Copyright notice
- *
- *  (c) 2010 stefan busemann (info@in2code.de)
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+/**
+ * Provide Additional Fields for the Scheduler
+ */
+
+use TYPO3\CMS\Scheduler\AdditionalFieldProviderInterface;
+use TYPO3\CMS\Scheduler\Controller\SchedulerModuleController;
+use TYPO3\CMS\Core\Database\DatabaseConnection;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Lang\LanguageService;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Scheduler\Task\AbstractTask;
 
 /**
- * Aditional fields provider class for usage with the EXT:rss2import
- *
- * @author        Stefan Busemann (in2code.de)
- * @package        TYPO3
- * @subpackage    rss2_import
- *
+ * Class tx_rss2import_scheduler_additionalfieldprovider
  */
-class tx_rss2import_scheduler_additionalfieldprovider implements \TYPO3\CMS\Scheduler\AdditionalFieldProviderInterface
+class tx_rss2import_scheduler_additionalfieldprovider implements AdditionalFieldProviderInterface
 {
+    /** @var DatabaseConnection */
+    protected $databaseConnection;
+
+    /** @var LanguageService */
+    protected $languageService;
 
     /**
-     * This method is used to define new fields for adding or editing a task
-     * In this case, it adds a feed field
-     *
-     * @param    array $taskInfo : reference to the array containing the info used in the add/edit form
-     * @param    object $task : when editing, reference to the current task object. Null when adding.
-     * @param    \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $parentObject : reference to the calling object (Scheduler's BE module)
-     * @return    array                    Array containg all the information pertaining to the additional fields
-     *                                    The array is multidimensional, keyed to the task class name and each field's id
-     *                                    For each field it provides an associative sub-array with the following:
-     *                                        ['code']        => The HTML code for the field
-     *                                        ['label']        => The label of the field (possibly localized)
-     *                                        ['cshKey']        => The CSH key for the field
-     *                                        ['cshLabel']    => The code of the CSH label
+     * tx_rss2import_scheduler_additionalfieldprovider constructor.
      */
-    public function getAdditionalFields(array &$taskInfo, $task, \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $parentObject)
+    public function __construct()
     {
+        // Dependency Injection
+        $this->databaseConnection = GeneralUtility::makeInstance(DatabaseConnection::class);
+        $this->languageService = GeneralUtility::makeInstance(LanguageService::class);
+    }
 
+    /** @inheritdoc */
+    public function getAdditionalFields(array &$taskInfo, $task, SchedulerModuleController $parentObject)
+    {
         // Initialize extra field value
         if (empty($taskInfo['feed'])) {
             if ($parentObject->CMD == 'add') {
@@ -67,17 +51,15 @@ class tx_rss2import_scheduler_additionalfieldprovider implements \TYPO3\CMS\Sche
 
         // Write the code for the field
         $fieldID = 'task_feed';
-        $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*',
+        $res = $this->databaseConnection->exec_SELECTquery('*',
             'tx_rss2import_feeds',
             '1=1 AND deleted = 0'
-        // TODO: What is tx_saupdatemailer? I can nor find it on TER, nor through a few Google searches.
-        //'1=1 ' . t3lib_BEfunc::BEenableFields('tx_saupdatemailer_tasks') . ' AND deleted = 0'
         );
 
         $options = '';
 
         if ($res) {
-            while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+            while ($row = $this->databaseConnection->sql_fetch_assoc($res)) {
                 $options .= "<option ";
                 if ($row['uid'] == $taskInfo['feed']) {
                     $options .= ' selected ';
@@ -90,60 +72,54 @@ class tx_rss2import_scheduler_additionalfieldprovider implements \TYPO3\CMS\Sche
         }
 
 
-        $additionalFields = array();
-        if ($options == "") {
-            $parentObject->addMessage($GLOBALS['LANG']->sL('LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_scheduler.norecord'), \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR);
+        $additionalFields = [];
+        if (empty($options)) {
+            $parentObject->addMessage(
+                $this->languageService->sL('LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_scheduler.norecord'),
+                FlashMessage::ERROR
+            );
         } else {
             $fieldCode = '<select name="tx_scheduler[feed]" size="1" id="' . $fieldID . '" >' . $options . '</select>';
-            $additionalFields[$fieldID] = array(
+            $additionalFields[$fieldID] = [
                 'code' => $fieldCode,
                 'label' => 'LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_scheduler.record',
                 'cshKey' => '_MOD_tools_txschedulerM1',
                 'cshLabel' => $fieldID
-            );
+            ];
         }
 
         return $additionalFields;
     }
 
-    /**
-     * This method checks any additional data that is relevant to the specific task
-     * If the task class is not relevant, the method is expected to return true
-     *
-     * @param    array $submittedData : reference to the array containing the data submitted by the user
-     * @param    \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $parentObject : reference to the calling object (Scheduler's BE module)
-     * @return    boolean                    True if validation was ok (or selected class is not relevant), false otherwise
-     */
-    public function validateAdditionalFields(array &$submittedData, \TYPO3\CMS\Scheduler\Controller\SchedulerModuleController $parentObject)
+    /** @inheritdoc */
+    public function validateAdditionalFields(array &$submittedData, SchedulerModuleController $parentObject)
     {
         $submittedData['feed'] = trim($submittedData['feed']);
 
-        if (empty($submittedData['feed'])) {
-            $parentObject->addMessage($GLOBALS['LANG']->sL('LLL:EXT:rss2_import/locallang.xml:tx_rss2import_scheduler.norecord'), \TYPO3\CMS\Core\Messaging\FlashMessage::ERROR);
-            $result = false;
-        } else {
-            $result = true;
+        $emptyFeed = empty($submittedData['feed']);
+
+        if ($emptyFeed) {
+            $parentObject->addMessage(
+                $this->languageService->sL('LLL:EXT:rss2_import/locallang.xml:tx_rss2import_scheduler.norecord'),
+                FlashMessage::ERROR
+            );
         }
 
-        return $result;
+        return $emptyFeed;
     }
 
-    /**
-     * This method is used to save any additional input into the current task object
-     * if the task class matches
-     *
-     * @param    array $submittedData : array containing the data submitted by the user
-     * @param    \TYPO3\CMS\Scheduler\Task\AbstractTask $task : reference to the current task object
-     * @return    void
-     */
-    public function saveAdditionalFields(array $submittedData, \TYPO3\CMS\Scheduler\Task\AbstractTask $task)
+    /** @inheritdoc */
+    public function saveAdditionalFields(array $submittedData, AbstractTask $task)
     {
         $task->feed = $submittedData['feed'];
     }
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/'.$_EXTKEY.'/class.tx_rss2import_scheduler_additionalfieldprovider.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rss2_import/class.tx_rss2import_scheduler_additionalfieldprovider.php']);
-}
+global $TYPO3_CONF_VARS;
 
-?>
+if (defined('TYPO3_MODE') &&
+    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rss2_import/class.tx_rss2import_scheduler_additionalfieldprovider.php']) {
+    include_once(
+        $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rss2_import/class.tx_rss2import_scheduler_additionalfieldprovider.php']
+    );
+}
