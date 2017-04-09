@@ -3,6 +3,8 @@
  * A helper class containing the basic functionality of the RSS2 importer.
  */
 
+namespace RuhrConnect\Rss2Import;
+
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Lang\LanguageService;
@@ -14,10 +16,6 @@ use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 
 defined('TYPO3_MODE') || die('Access denied.');
-
-// Load Classes
-// @todo autoloading
-require_once __DIR__ . '/../class.tx_rss2import_rssparser.php';
 
 // Load Languages
 /** @var LanguageService $languageService */
@@ -41,15 +39,16 @@ define('INFO_TYPE_EVENT', 4);
 define('INFO_TYPE_EVENT_EXTERNAL', 7);
 
 /**
- * Class tx_rss2import_helper
+ * Class Helper
+ * @package RuhrConnect\Rss2Import
  */
-class tx_rss2import_helper
+class Helper
 {
         /** @var ContentObjectRenderer */
     protected $contentObjectRenderer; //Only used for shortening the displayed title when importing, full title will be used when imported.
     /** @var LanguageService */
     protected $languageService;
-    /** @var tx_rss2import_RSSParser */
+    /** @var Parser */
     protected $rssParser;
     /** @var BackendUserAuthentication */
     protected $backendUserAuthentication;
@@ -70,7 +69,7 @@ class tx_rss2import_helper
         // Dependency Injection
         $this->contentObjectRenderer     = GeneralUtility::makeInstance(ContentObjectRenderer::class);
         $this->languageService           = GeneralUtility::makeInstance(LanguageService::class);
-        $this->rssParser                 = GeneralUtility::makeInstance(tx_rss2import_RSSParser::class);
+        $this->rssParser                 = GeneralUtility::makeInstance(Parser::class);
         $this->backendUserAuthentication = GeneralUtility::makeInstance(BackendUserAuthentication::class);
         $this->databaseConnection        = $GLOBALS['TYPO3_DB'];
         $this->typoScriptParser = GeneralUtility::makeInstance(TypoScriptParser::class);
@@ -97,14 +96,6 @@ class tx_rss2import_helper
             $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rss2_import']['formatters'],
             true
         );
-        // Include Formatter Class Files
-        $extPath = ExtensionManagementUtility::extPath('rss2_import');
-        foreach ($formatters as $key => $fileName) {
-            $filePath = $extPath . 'formatters' . DIRECTORY_SEPARATOR . $fileName . '.php';
-            if (file_exists($filePath)) {
-                require_once $filePath;
-            }
-        }
 
         // Create parser instance.
         $feeds = $this->getFeeds($feedsToGet);
@@ -738,8 +729,4 @@ class tx_rss2import_helper
 
         return $uids;
     }
-}
-
-if (defined("TYPO3_MODE") && isset($TYPO3_CONF_VARS[TYPO3_MODE]["XCLASS"]["ext/rss2_import/mod1/class.tx_rss2import_helper.php"])) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]["XCLASS"]["ext/rss2_import/mod1/class.tx_rss2import_helper.php"]);
 }

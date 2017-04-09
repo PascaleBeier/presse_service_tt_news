@@ -3,6 +3,8 @@
  * Provide Additional Fields for the Scheduler
  */
 
+namespace RuhrConnect\Rss2Import;
+
 use TYPO3\CMS\Scheduler\AdditionalFieldProviderInterface;
 use TYPO3\CMS\Scheduler\Controller\SchedulerModuleController;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
@@ -12,9 +14,10 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
 
 /**
- * Class tx_rss2import_scheduler_additionalfieldprovider
+ * Class AdditionalFieldsProvider
+ * @package RuhrConnect\Rss2Import
  */
-class tx_rss2import_scheduler_additionalfieldprovider implements AdditionalFieldProviderInterface
+class AdditionalFieldsProvider implements AdditionalFieldProviderInterface
 {
     /** @var DatabaseConnection */
     protected $databaseConnection;
@@ -23,12 +26,12 @@ class tx_rss2import_scheduler_additionalfieldprovider implements AdditionalField
     protected $languageService;
 
     /**
-     * tx_rss2import_scheduler_additionalfieldprovider constructor.
+     * AdditionalFieldsProvider constructor.
      */
     public function __construct()
     {
         // Dependency Injection
-        $this->databaseConnection = GeneralUtility::makeInstance(DatabaseConnection::class);
+        $this->databaseConnection = $GLOBALS['TYPO3_DB'];
         $this->languageService = GeneralUtility::makeInstance(LanguageService::class);
     }
 
@@ -113,13 +116,4 @@ class tx_rss2import_scheduler_additionalfieldprovider implements AdditionalField
     {
         $task->feed = $submittedData['feed'];
     }
-}
-
-global $TYPO3_CONF_VARS;
-
-if (defined('TYPO3_MODE') &&
-    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rss2_import/class.tx_rss2import_scheduler_additionalfieldprovider.php']) {
-    include_once(
-        $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rss2_import/class.tx_rss2import_scheduler_additionalfieldprovider.php']
-    );
 }

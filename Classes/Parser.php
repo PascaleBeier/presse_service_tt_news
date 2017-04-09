@@ -1,40 +1,25 @@
 <?php
+/**
+ * This will gather all basic information of an RSS 2 Feed.
+ * Along with basic functionality, the Parser will
+ * also parse feeds extended by namespaces.
+ */
+
+Namespace RuhrConnect\Rss2Import;
+
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * ***************************************************************************************************************
- * Date: October 21, 2004
- * Author: Dan Cochran
- *
- * Description: This will gather all basic information contained in a rss2.0 feed. Along with basic functionality,
- *             the RSSParser will also parse feeds extended by namespaces (by Mads Kirkedal Henriksen).
- *             Please see the example at the bottom to see how to use the class, and most importantly, have fun!
- *
- * email me with question or comments/bugs @ dan@deecodameeko.com (Or mkh@daimi.au.dk for the modified version)
- *
- * Disclaimer:
- * Copyright (C) 2005  Dan Cochran
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- * *****************************************************************************************************************/
-class tx_rss2import_RSSParser{
-	private $parseResult = array();
-
+ * Class Parser
+ * @package RuhrConnect\Rss2Import
+ */
+class Parser
+{
+	private $parseResult = [];
 	private $insideitem = false;
 	private $insideimage = false;
 	private $insidetext = false;
-	private $insideNS = array();
+	private $insideNS = [];
 	private $url = '';
 	private $enclosure = '';
 
@@ -68,38 +53,36 @@ class tx_rss2import_RSSParser{
 		xml_set_character_data_handler($this->xml_parser, "characterData");
 	}
 
-	/**
-	 * Start parsing RSS2 feed
-	 *
-	 * @param	string		$url: The URL to fetch RSS2 feed from.
-	 * @return	[type]		...
-	 */
+    /**
+     * Parse an RSS Feed.
+     *
+     * @param $url
+     */
 	public function parse($url) {
-		$xml = \TYPO3\CMS\Core\Utility\GeneralUtility::getURL($url);
+		$xml = GeneralUtility::getURL($url);
 		$status = xml_parse($this->xml_parser, $xml);
 		if (!$status) {
 			$this->errors[] = 'XML error: ' . xml_error_string(xml_get_error_code($this->xml_parser)) . ' at line ' . xml_get_current_line_number($this->xml_parser);
 		}
 	}
 
-	/**
-	 * Return any errors currently registered in parser
-	 *
-	 * @return	[type]		...
-	 */
+    /**
+     * Return any errors currently registered in parser.
+     *
+     * @return array
+     */
 	public function get_errors() {
 		return $this->errors;
 	}
 
-	/**
-	 * Get RSS2 channel element
-	 *
-	 * @return	[type]		...
-	 */
-	public function get_channel(){
-		if(isset($this->parseResult['channel'])){
-			return($this->parseResult['channel']);
-		}
+    /**
+     * Get the <channel>-Element
+     *
+     * @return mixed|null
+     */
+	public function get_channel()
+    {
+        return isset($this->parseResult['channel']) ? $this->parseResult['channel'] : null;
 	}
 
 	/**
@@ -436,22 +419,4 @@ class tx_rss2import_RSSParser{
 		}
 	}
 
-}//end class
-
-//sample implementation the class
-/*
- $rs = new RSSParser(); //create a new instance
- $rs->parse($url_or_filename, $rs);
- $rss['channel'] = $rs->get_channel();
- $rss['items'] = $rs->get_items();
- $rss['image'] = $rs->get_image();
- $rss['rvws'] = $rs->get_rvw();
- $rss['ratings'] = $rs->get_rating();
- $rss['textinput'] = $rs->get_textinput();
-
- print_r($rss["channel"]);
- print_r($rss["items"]);*/
-
-if (defined('TYPO3_MODE') && isset($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rss2_import/class.tx_rss2import_rssparser.php'])) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/rss2_import/mod1/class.tx_rss2import_rssparser.php']);
 }

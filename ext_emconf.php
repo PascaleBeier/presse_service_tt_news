@@ -1,6 +1,6 @@
 <?php
 
-$EM_CONF[$_EXTKEY] = [
+$EM_CONF['rss2_import'] = [
     'title' => 'RSS2 Import Presse-Service',
     'description' => 'Importiert RSS2 Feeds aus dem Presse-Service in die Extension tt_news',
     'module' => 'mod1',

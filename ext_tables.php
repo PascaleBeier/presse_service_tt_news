@@ -2,14 +2,30 @@
 
 defined("TYPO3_MODE") || die ("Access denied.");
 
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+$composerAutoloadFile = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('rss2_import')
+                        . 'vendor/autoload.php';
+
+require_once($composerAutoloadFile);
 
 if (TYPO3_MODE === "BE") {
-    ExtensionManagementUtility::addModule(
-        "tools",
-        "txrss2importM1",
-        "",
-        ExtensionManagementUtility::extPath('rss2_import') . "mod1/");
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addModule(
+        'tools',
+        'txrss2importM1',
+        '',
+        TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('rss2_import').'mod1/',
+        [
+            'access' => 'user,group',
+            'script' => '_DISPATCH',
+            'name' => 'tools_txrss2importM1',
+            'vendorName' => 'RuhrConnect\Rss2Import',
+            'labels' => [
+                'tabs_images' => [
+                    'tab' => 'EXT:rss2_import/mod1/moduleicon.gif'
+                ],
+                'll_ref' => 'LLL:EXT:rss2_import/mod1/locallang_mod.xml'
+            ]
+        ]
+    );
 }
 
 $TCA["tx_rss2import_feeds"] = [
@@ -26,8 +42,8 @@ $TCA["tx_rss2import_feeds"] = [
             "starttime" => "starttime",
             "endtime"   => "endtime",
         ],
-        "dynamicConfigFile" => ExtensionManagementUtility::extPath('rss2_import') . "tca.php",
-        "iconfile"          => ExtensionManagementUtility::extRelPath('rss2_import') . "icon_tx_rss2import_feeds.gif",
+        "dynamicConfigFile" => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('rss2_import') . "tca.php",
+        "iconfile"          => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('rss2_import') . "icon_tx_rss2import_feeds.gif",
     ],
     "feInterface" => [
         "fe_admin_fieldList" => "hidden, starttime, endtime, title, url, errors, errors_count, target",
@@ -53,8 +69,8 @@ $tempColumns = [
     ]
 ];
 
-ExtensionManagementUtility::addTCAcolumns("tt_news", $tempColumns, 1);
-ExtensionManagementUtility::addLLrefForTCAdescr(
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns("tt_news", $tempColumns, 1);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr(
     'tx_rss2import_feeds',
     'EXT:rss2_import/locallang_csh_feeds.xml'
 );
