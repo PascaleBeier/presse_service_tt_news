@@ -78,14 +78,14 @@ class AdditionalFieldsProvider implements AdditionalFieldProviderInterface
         $additionalFields = [];
         if (empty($options)) {
             $parentObject->addMessage(
-                $this->languageService->sL('LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_scheduler.norecord'),
+                $this->languageService->sL('LLL:EXT:rss2_import/Resources/Private/Language/locallang_db.xml:tx_rss2import_scheduler.norecord'),
                 FlashMessage::ERROR
             );
         } else {
             $fieldCode = '<select name="tx_scheduler[feed]" size="1" id="' . $fieldID . '" >' . $options . '</select>';
             $additionalFields[$fieldID] = [
                 'code' => $fieldCode,
-                'label' => 'LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_scheduler.record',
+                'label' => 'LLL:EXT:rss2_import/Resources/Private/Language/locallang_db.xml:tx_rss2import_scheduler.record',
                 'cshKey' => '_MOD_tools_txschedulerM1',
                 'cshLabel' => $fieldID
             ];
@@ -103,7 +103,7 @@ class AdditionalFieldsProvider implements AdditionalFieldProviderInterface
         if (empty($submittedData['feed'])) {
             $validData = false;
             $parentObject->addMessage(
-                $this->languageService->sL('LLL:EXT:rss2_import/locallang.xml:tx_rss2import_scheduler.norecord'),
+                $this->languageService->sL('LLL:EXT:rss2_import/Resources/Private/Language/locallang.xml:tx_rss2import_scheduler.norecord'),
                 FlashMessage::ERROR
             );
         }

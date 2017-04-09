@@ -56,6 +56,6 @@ class Scheduler extends AbstractTask
 	 * @return string Information to display
 	 */
 	public function getAdditionalInformation() {
-		return $GLOBALS['LANG']->sL('LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_scheduler.record1') . ': ' . $this->feed;
+		return $GLOBALS['LANG']->sL('LLL:EXT:rss2_import/Resources/Private/Language/locallang_db.xml:tx_rss2import_scheduler.record1') . ': ' . $this->feed;
 	}
 }

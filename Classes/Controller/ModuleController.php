@@ -273,14 +273,4 @@ class ModuleController extends BaseScriptClass
     {
         echo $this->content;
     }
-
-    public function route()
-    {
-        // Make instance of Script Object Back-End (SOBE):
-        $GLOBALS['SOBE'] = GeneralUtility::makeInstance(ModuleController::class);
-        $GLOBALS['SOBE']->init();
-        $GLOBALS['SOBE']->checkExtObj();
-        $GLOBALS['SOBE']->main();
-        $GLOBALS['SOBE']->printContent();
-    }
 }
