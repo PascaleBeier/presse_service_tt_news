@@ -178,10 +178,10 @@ $TCA['tx_rss2import_feeds'] = Array(
             'label' => 'LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_feeds.default_type',
             'config' => Array(
                 'type' => 'select',
+                'renderType' => 'selectSingleBox',
                 'items' => Array(
-                    Array('LLL:EXT:tt_news/locallang_tca.php:tt_news.type.I.0', 0),
-                    Array('LLL:EXT:tt_news/locallang_tca.php:tt_news.type.I.2', 2),
-                    Array('LLL:EXT:au_tsconfig/locallang.xml:tt_news.type.event', 4)
+                    Array('LLL:EXT:tt_news/Resources/Private/Language/locallang_tca.php:tt_news.type.I.0', 0),
+                    Array('LLL:EXT:tt_news/Resources/Private/Language/locallang_tca.php:tt_news.type.I.2', 2),
                 ),
                 'default' => 0
             )
@@ -192,6 +192,7 @@ $TCA['tx_rss2import_feeds'] = Array(
             'label' => 'LLL:EXT:rss2_import/locallang_db.xml:tx_rss2import_feeds.default_category',
             'config' => Array(
                 'type' => 'select',
+                'renderType' => 'selectMultipleSideBySide',
                 'form_type' => 'user',
                 // 'userFunc' => 'tx_ttnews_treeview->displayCategoryTree', // Function in tt_news less than 3.x
                 'userFunc' => 'tx_ttnews_TCAform_selectTree->renderCategoryFields', // Function in tt_news from 3.x and onwards
