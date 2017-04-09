@@ -89,14 +89,6 @@ class Helper
         $content              = '';
         $this->maxTitleLength = 40;
 
-        // Load the formatter classes. These are set in the Extension Manager and resides in
-        // the directory EXT:rss2_import/formatters/
-        $formatters = GeneralUtility::trimExplode(
-            ',',
-            $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rss2_import']['formatters'],
-            true
-        );
-
         // Create parser instance.
         $feeds = $this->getFeeds($feedsToGet);
         foreach ($feeds as $feed) {

@@ -27,10 +27,10 @@ foreach ($initVars as $var) {
 // Check if Scheduler is available - If so, include our Scheduler Task
 if (ExtensionManagementUtility::isLoaded('scheduler')) {
 
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks']['tx_rss2import_scheduler'] = [
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\RuhrConnect\Rss2Import\Scheduler::class] = [
         'extension'        => 'rss2_import',
         'title'            => 'RSS2 feed importer',
         'description'      => 'Automates the Import of the RSS2 Feeds',
-        'additionalFields' => 'tx_rss2import_scheduler_additionalfieldprovider'
+        'additionalFields' => \RuhrConnect\Rss2Import\AdditionalFieldsProvider::class
     ];
 }

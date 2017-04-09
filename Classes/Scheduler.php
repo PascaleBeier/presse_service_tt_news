@@ -3,13 +3,13 @@
 namespace RuhrConnect\Rss2Import;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Scheduler\Task;
+use TYPO3\CMS\Scheduler\Task\AbstractTask;
 
 /**
  * Class Scheduler
  * @package RuhrConnect\Rss2Import
  */
-class Scheduler extends Task
+class Scheduler extends AbstractTask
 {
     /** @var int uid of the feed Record */
 	public $feed = 0;
@@ -35,9 +35,19 @@ class Scheduler extends Task
 	 */
 	public function execute()
     {
-		$result = $this->helper->importFeeds([$this->feed], true);
+        $feedsToImport = $this->feed;
 
-		return strpos($result, 'Zero rows error: 0') && strpos($result, 'Several rows error: 0');
+        if (!is_array($feedsToImport)) {
+            $feedsToImport = array($feedsToImport);
+        }
+
+		$result = $this->helper->importFeeds($feedsToImport, true);
+
+        if (strpos($result, 'Zero rows error: 0') && strpos($result, 'Several rows error: 0')) {
+            return true;
+        } else {
+            return false;
+        }
 	}
 
 	/**

@@ -59,6 +59,11 @@ class Parser
      * @param $url
      */
 	public function parse($url) {
+
+        $this->xml_parser = xml_parser_create();
+        xml_set_object($this->xml_parser, $this);
+        xml_set_element_handler($this->xml_parser, "startElement", "endElement");
+        xml_set_character_data_handler($this->xml_parser, "characterData");
 		$xml = GeneralUtility::getURL($url);
 		$status = xml_parse($this->xml_parser, $xml);
 		if (!$status) {

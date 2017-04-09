@@ -97,18 +97,18 @@ class AdditionalFieldsProvider implements AdditionalFieldProviderInterface
     /** @inheritdoc */
     public function validateAdditionalFields(array &$submittedData, SchedulerModuleController $parentObject)
     {
+        $validData = true;
         $submittedData['feed'] = trim($submittedData['feed']);
 
-        $emptyFeed = empty($submittedData['feed']);
-
-        if ($emptyFeed) {
+        if (empty($submittedData['feed'])) {
+            $validData = false;
             $parentObject->addMessage(
                 $this->languageService->sL('LLL:EXT:rss2_import/locallang.xml:tx_rss2import_scheduler.norecord'),
                 FlashMessage::ERROR
             );
         }
 
-        return $emptyFeed;
+        return $validData;
     }
 
     /** @inheritdoc */

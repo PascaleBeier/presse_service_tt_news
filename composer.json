@@ -1,7 +1,7 @@
 {
     "name": "ruhr-connect/rss2-import",
     "description": "Importiert RSS2 Feeds aus dem Presse-Service in die Extension tt_news",
-    "version": "7.0.0",
+    "version": "7.0.1",
     "replace": {
         "rss2_import": "self.version",
         "typo3-ter/rss2_import": "self.version"
