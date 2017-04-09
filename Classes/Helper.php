@@ -108,8 +108,6 @@ class Helper
             }
             $rss['channel']   = $this->rssParser->get_channel();
             $rss['items']     = $this->rssParser->get_items();
-            $rss['image']     = $this->rssParser->get_image();
-            $rss['textinput'] = $this->rssParser->get_textinput();
             $feed['title']    = trim($feed['title']);
 
             if ($outputPlainText) {
@@ -358,15 +356,15 @@ class Helper
         } else {
             //Get associated image from enclosure, if any.
             $image = '';
+
+            // @todo dry
             if ($feed['import_images']) {
-                if (count($item['enclosure']) > 1 && is_numeric($item['enclosure']['LENGTH'])) {
-                    $image = $this->getImage($item['enclosure']['TYPE'], $item['enclosure']['URL'],
-                        $item['enclosure']['LENGTH']);
-                }
-                // Added Support for media tag - 2010-08-07 Stefan Busemann / in2code.de
-                if ($item['media']) {
-                    $image = $this->getImage($this->getFileType($item['media']['thumbnail']['attrs']['URL']),
-                        $item['media']['thumbnail']['attrs']['URL'], 0);
+                if (isset($item['enclosure'])) {
+                    $image = $this->getImage(
+                        $item['enclosure']->type,
+                        $item['enclosure']->url,
+                        $item['enclosure']->length
+                    );
                 }
             }
 
@@ -650,15 +648,14 @@ class Helper
     {
         //Get associated image from enclosure, if any.
         $image = '';
+
         if ($feed['import_images']) {
-            if (count($item['enclosure']) > 1 && is_numeric($item['enclosure']['LENGTH'])) {
-                $image = $this->getImage($item['enclosure']['TYPE'], $item['enclosure']['URL'],
-                    $item['enclosure']['LENGTH']);
-            }
-            // Added Support for media tag - 2010-08-07 Stefan Busemann / in2code.de
-            if ($item['media']) {
-                $image = $this->getImage($this->getFileType($item['media']['thumbnail']['attrs']['URL']),
-                    $item['media']['thumbnail']['attrs']['URL'], 0);
+            if (isset($item['enclosure'])) {
+                $image = $this->getImage(
+                    $item['enclosure']->type,
+                    $item['enclosure']->url,
+                    $item['enclosure']->length
+                );
             }
         }
 

@@ -1,11 +1,7 @@
 {
     "name": "ruhr-connect/rss2-import",
     "description": "Importiert RSS2 Feeds aus dem Presse-Service in die Extension tt_news",
-    "version": "7.0.3",
-    "replace": {
-        "rss2_import": "self.version",
-        "typo3-ter/rss2_import": "self.version"
-    },
+    "version": "7.0.4",
     "type": "typo3-cms-extension",
     "license": "MIT",
     "authors": [
@@ -14,14 +10,14 @@
             "email": "p.beier@ruhr-connect.de"
         }
     ],
-    "require": {
-        "typo3/cms-core": "^7.6.0",
-        "typo3-ter/tt-news": "^7.6.0"
-    },
     "autoload": {
         "psr-4": {
             "RuhrConnect\\Rss2Import\\": "Classes/"
         }
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "require": {
+        "zendframework/zend-feed": "^2.8",
+        "zendframework/zend-http": "^2.6"
+    }
 }
