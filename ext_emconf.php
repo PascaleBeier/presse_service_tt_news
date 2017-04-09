@@ -13,11 +13,9 @@ $EM_CONF['rss2_import'] = [
         'depends' => [
             'php' => '5.6.0-7.1.99',
             'typo3' => '7.2.0-7.99.99',
+            'tt_news' => '7.6.0-7.99.99',
+            'scheduler' => '7.6.0-7.99.99',
         ],
-        'conflicts' => [],
-        'suggests' => [
-            'tt_news' => '7.0.0-7.99.99',
-            'scheduler' => '7.2.0-7.99.99',
-        ],
+        'conflicts' => []
     ],
 ];
