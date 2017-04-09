@@ -195,25 +195,34 @@ class ModuleController extends BaseScriptClass
      */
     private function getAvailableFeeds()
     {
-        $content = $this->documentTemplate->table_TABLE.
-                    '<thead>'
-                        .$this->documentTemplate->table_TR.
-                            '<th>
+        $content =
+            '<div id="t3-generated-1">
+                <table class="t3-table" width="100%">
+                    <thead>
+                        <tr class="t3-row-header">
+                            <th class="t3-col-header t3-cell">
+                                <div class="t3-cell-inner">
                                 ' . $this->languageService->getLL("feeds.edit") . '
+                                </div>
                             </th>
-                            <th>
+                            <th class="t3-col-header">
+                                <div class="t3-cell-inner">
                                 ' . $this->languageService->getLL("feeds.title") . '
+                                </div>
                             </th>
-                            <th>
+                            <th class="t3-col-header">
+                                <div class="t3-cell-inner">
                                 ' . $this->languageService->getLL("feeds.url") . '
+                                </div>
                             </th>
-                            <th>
+                            <th class="t3-col-header">
+                                <div class="t3-cell-inner">
                                 ' . $this->languageService->getLL("feeds.update") . '
+                                </div>
                             </th>
                         </tr>
                     </thead>
                 <tbody>';
-
 
         $feeds = $this->helper->getFeeds();
         foreach ($feeds as $feed) {
@@ -228,11 +237,11 @@ class ModuleController extends BaseScriptClass
             $editLink = $this->documentTemplate->t3Button($editLinkOnClick, $this->languageService->getLL('editrecord'));
 
             $content .=
-                $this->documentTemplate->table_TR.
-                '<td>' . $editLink . '</td>' .
-                '<td>' . $feed['title'] . '</td>' .
-                '<td>' . $feed['url'] . '</td>' .
-                '<td><input class="t3-form-checkbox t3-form-field" type="checkbox" name="import[]" value="' . $feed['uid'] . '" /></td>' .
+                '<tr class="t3-row">' .
+                '<td class="t3-cell"><div class="t3-cell-inner">' . $editLink . '</div></td>' .
+                '<td class="t3-cell"><div class="t3-cell-inner">' . $feed['title'] . '</div></td>' .
+                '<td class="t3-cell"><div class="t3-cell-inner">' . $feed['url'] . '</div></td>' .
+                '<td class="t3-cell"><div class="t3-cell-inner"><input class="t3-form-checkbox t3-form-field" type="checkbox" name="import[]" value="' . $feed['uid'] . '" /></div></td>' .
                 '</tr>';
 
         }
