@@ -21,7 +21,7 @@ defined('TYPO3_MODE') || die('Access denied.');
 /** @var LanguageService $languageService */
 $languageService = GeneralUtility::makeInstance(LanguageService::class);
 $languageService->init('default');
-$languageService->includeLLFile('EXT:rss2_import/mod1/locallang.xml');
+$languageService->includeLLFile('EXT:rss2_import/Resources/Private/Language/locallang.xml');
 
 /*
  * Define constants that match the values in 'type' column in the tt_news table schema.

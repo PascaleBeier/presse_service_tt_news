@@ -57,7 +57,7 @@ class ModuleController extends BaseScriptClass
         self::$extensionPath = ExtensionManagementUtility::extRelPath('rss2_import');
 
 
-        $this->languageService->includeLLFile('EXT:rss2_import/mod1/locallang.xml');
+        $this->languageService->includeLLFile('EXT:rss2_import/Resources/Private/Language/locallang.xml');
 
     }
 
