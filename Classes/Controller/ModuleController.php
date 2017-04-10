@@ -5,6 +5,7 @@
 
 namespace RuhrConnect\Rss2Import\Controller;
 
+use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -14,6 +15,7 @@ use TYPO3\CMS\Backend\Module\BaseScriptClass;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\Template\DocumentTemplate;
 use RuhrConnect\Rss2Import\Helper;
+use TYPO3\CMS\Core\Imaging\IconFactory;
 
 /**
  * Class ModuleController
@@ -38,6 +40,8 @@ class ModuleController extends BaseScriptClass
     protected $helper;
     /** @var DocumentTemplate */
     protected $documentTemplate;
+    /** @var IconFactory */
+    protected $iconFactory;
 
     /**
      * Module constructor.
@@ -49,6 +53,7 @@ class ModuleController extends BaseScriptClass
         $this->backendUserAuthentication = GeneralUtility::makeInstance(BackendUserAuthentication::class);
         $this->helper = GeneralUtility::makeInstance(Helper::class);
         $this->documentTemplate = GeneralUtility::makeInstance(DocumentTemplate::class);
+        $this->iconFactory = GeneralUtility::makeInstance(IconFactory::class);
 
         $this->page_for_feeds = intval($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rss2_import']['page_for_feeds']);
         $this->image_max_width = intval($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['rss2_import']['image_max_width']);
@@ -84,9 +89,8 @@ class ModuleController extends BaseScriptClass
      */
     public function main()
     {
-        global $BACK_PATH;
-
-        $this->documentTemplate->backPath = $BACK_PATH;
+        $this->documentTemplate->backPath = $GLOBALS['BACK_PATH'];
+        $this->documentTemplate->bodyTagAdditions = 'class="module-body"';
         $this->documentTemplate->form = '<form action="" method="POST">';
 
         // JavaScript
@@ -171,13 +175,13 @@ class ModuleController extends BaseScriptClass
                     if (!is_array($feedsToImport)) {
                         $feedsToImport = array($feedsToImport);
                     }
-                    $content = $this->documentTemplate->table_TABLE.
-                        $this->documentTemplate->table_TR.
-                        '<td>' . $this->languageService->getLL("feeds.title") . '</td>' .
-                        '<td>' . $this->languageService->getLL("feeds.errors_count") . '</td>' .
-                        '<td>' . $this->languageService->getLL("feeds.errors") . '</td>' .
-                        '<td>' . $this->languageService->getLL("feeds.status") . '</td>' .
-                        '</tr>';
+                    $content = '<table class="table table-striped table-hover">'.
+                        '<thead>'.
+                        '<th>' . $this->languageService->getLL('feeds.title') . '</th>' .
+                        '<th>' . $this->languageService->getLL('feeds.errors_count') . '</th>' .
+                        '<th>' . $this->languageService->getLL('feeds.errors') . '</th>' .
+                        '<th>' . $this->languageService->getLL('feeds.status') . '</th>' .
+                        '</thead>';
 
                     $content .= $this->helper->importFeeds($feedsToImport, 0, $this->documentTemplate);
                     $content .= $this->documentTemplate->t3Button('this.form.submit()', $this->languageService->getLL('back_label'));
@@ -195,32 +199,23 @@ class ModuleController extends BaseScriptClass
      */
     private function getAvailableFeeds()
     {
-        $content =
-            '<div id="t3-generated-1">
-                <table class="t3-table" width="100%">
-                    <thead>
-                        <tr class="t3-row-header">
-                            <th class="t3-col-header t3-cell">
-                                <div class="t3-cell-inner">
-                                ' . $this->languageService->getLL("feeds.edit") . '
-                                </div>
+        $content = '<table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                            <th>
+                                ' . $this->languageService->getLL('feeds.title') . '
                             </th>
-                            <th class="t3-col-header">
-                                <div class="t3-cell-inner">
-                                ' . $this->languageService->getLL("feeds.title") . '
-                                </div>
+                            <th>
+                                ' . $this->languageService->getLL('feeds.url') . '
                             </th>
-                            <th class="t3-col-header">
-                                <div class="t3-cell-inner">
-                                ' . $this->languageService->getLL("feeds.url") . '
-                                </div>
+                            <th>
+                                ' . $this->languageService->getLL('feeds.update') . '
                             </th>
-                            <th class="t3-col-header">
-                                <div class="t3-cell-inner">
-                                ' . $this->languageService->getLL("feeds.update") . '
-                                </div>
+                            <th>
+                                ' . $this->languageService->getLL('feeds.edit') . '
                             </th>
-                        </tr>
+                            </tr>
+                        </th>
                     </thead>
                 <tbody>';
 
@@ -234,14 +229,17 @@ class ModuleController extends BaseScriptClass
                 )
             );
 
-            $editLink = $this->documentTemplate->t3Button($editLinkOnClick, $this->languageService->getLL('editrecord'));
+            $editLink = '<a href="#" class="btn btn-default" onclick="'.$editLinkOnClick.'"
+            title="'.$this->languageService->getLL('editrecord').'">
+            '.$this->iconFactory->getIcon('actions-document-open', ICON::SIZE_SMALL)->render().'
+            </a>';
 
             $content .=
-                '<tr class="t3-row">' .
-                '<td class="t3-cell"><div class="t3-cell-inner">' . $editLink . '</div></td>' .
-                '<td class="t3-cell"><div class="t3-cell-inner">' . $feed['title'] . '</div></td>' .
-                '<td class="t3-cell"><div class="t3-cell-inner">' . $feed['url'] . '</div></td>' .
-                '<td class="t3-cell"><div class="t3-cell-inner"><input class="t3-form-checkbox t3-form-field" type="checkbox" name="import[]" value="' . $feed['uid'] . '" /></div></td>' .
+                '<tr>' .
+                '<td>' . $feed['title'] . '</td>' .
+                '<td>' . $feed['url'] . '</td>' .
+                '<td><input type="checkbox" name="import[]" value="' . $feed['uid'] . '" /></td>' .
+                '<td>'.$editLink.'</td>'.
                 '</tr>';
 
         }
@@ -253,13 +251,18 @@ class ModuleController extends BaseScriptClass
             )
         );
 
-        $newLink = $this->documentTemplate->t3Button($newLinkOnClick, $this->languageService->getLL('newrecord'));
+        $newLink = '<a href="#" class="btn btn-default" onclick="'.$newLinkOnClick.'"> 
+            '.$this->iconFactory->getIcon('actions-document-new', Icon::SIZE_SMALL)->render().'
+            </a>';
 
-        $content .=
-            '<tr><td align="center">' . ($this->page_for_feeds ? $newLink : '') . '</td><td colspan="2"></td><td align="center"><a title="' . $this->languageService->getLL('select_all_label') . '"><input type="checkbox" name="checkall" onclick="checkUncheckAll(this);" /></a></td></tr>' .
-            '</tbody></table>';
-
-        $content .= $this->documentTemplate->t3Button('this.form.submit()', $this->languageService->getLL('submit_label'));
+        $content .= '</tbody></table>';
+        $content .= '<div class="btn-group">';
+        $content .= $newLink;
+        $content .= '<button class="btn btn-default" onclick="this.form.submit()" 
+        title="'.$this->languageService->getLL('submit_label').'">
+        '.$this->iconFactory->getIcon('actions-system-refresh', Icon::SIZE_SMALL)->render().'
+        </button>';
+        $content .= '</div>';
 
         return $content;
     }

@@ -13,7 +13,7 @@ CREATE TABLE tx_rss2import_feeds (
 	endtime int(11) unsigned DEFAULT '0' NOT NULL,
 	title tinytext NOT NULL,
 	url tinytext NOT NULL,
-	errors text NOT NULL,
+	errors VARCHAR(255) NOT NULL DEFAULT '',
 	errors_count int(11) DEFAULT '0' NOT NULL,
 	target blob NOT NULL,
 	override_edited tinyint(4) unsigned DEFAULT '0' NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE tx_rss2import_feeds (
 	default_type tinyint(4) DEFAULT '0' NOT NULL,
 	default_categories blob NOT NULL,
 	default_author tinytext NOT NULL,
-	default_authoremail tinytext NOT NULL
+	default_authoremail tinytext NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid)
@@ -37,5 +37,5 @@ CREATE TABLE tx_rss2import_feeds (
 #
 CREATE TABLE tt_news (
 	tx_rss2import_uid tinytext NOT NULL,
-	tx_rss2import_edited tinyint(4) unsigned DEFAULT '0' NOT NULL,
+	tx_rss2import_edited tinyint(4) unsigned DEFAULT '0' NOT NULL
 );

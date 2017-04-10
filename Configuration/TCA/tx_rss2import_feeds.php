@@ -14,7 +14,7 @@ return [
             "starttime" => "starttime",
             "endtime"   => "endtime",
         ],
-        "iconfile"       => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('rss2_import') . "icon_tx_rss2import_feeds.gif",
+        "iconfile"       => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('rss2_import', 'Resources/Public/Images/icon_tx_rss2import_feeds.gif'),
     ],
     'interface' => [
         'showRecordFieldList' => 'hidden,starttime,endtime,title,url,errors,errors_count,target'
